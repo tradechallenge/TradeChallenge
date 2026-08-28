@@ -88,27 +88,42 @@
     box-shadow:0 0 0 1px rgba(255,255,255,.04), 0 10px 24px -12px rgba(0,0,0,.6);
     border-left:6px solid var(--brass); transition:transform .2s, box-shadow .2s; }
   .entry:hover{ transform:translateX(3px); box-shadow:0 0 0 1px rgba(255,255,255,.06), 0 14px 30px -12px rgba(0,0,0,.7); }
-  .entry.gold{border-left-color:var(--stamp-red); box-shadow:0 0 0 1px rgba(255,176,32,.25), 0 0 40px -8px rgba(255,176,32,.35), 0 10px 24px -12px rgba(0,0,0,.6); }
+  .entry.gold{ border-left-color:var(--stamp-red); border-left-width:10px; padding:24px 28px; margin-bottom:22px; margin-top:4px;
+    transform:scale(1.035); z-index:3; position:relative;
+    background:linear-gradient(135deg,#fff6dc,#3a2400 145%);
+    box-shadow:0 0 0 1px rgba(255,176,32,.4), 0 0 0 3px rgba(255,176,32,.18), 0 0 55px -6px rgba(255,176,32,.55), 0 20px 40px -16px rgba(0,0,0,.75);
+    animation:gold-card-glow 2.4s ease-in-out infinite; }
+  .entry.gold:hover{ transform:scale(1.035) translateX(3px); }
+  @keyframes gold-card-glow{
+    0%,100%{ box-shadow:0 0 0 1px rgba(255,176,32,.4), 0 0 0 3px rgba(255,176,32,.18), 0 0 55px -6px rgba(255,176,32,.55), 0 20px 40px -16px rgba(0,0,0,.75); }
+    50%{ box-shadow:0 0 0 1px rgba(255,176,32,.55), 0 0 0 5px rgba(255,176,32,.3), 0 0 75px -4px rgba(255,176,32,.8), 0 20px 40px -16px rgba(0,0,0,.75); }
+  }
+  .leader-tag{ font-family:'Orbitron','Oswald',sans-serif; font-size:11px; font-weight:800; letter-spacing:.12em; text-transform:uppercase;
+    color:#8a5200; margin:0 0 4px; display:flex; align-items:center; gap:5px; }
   .mascot-avatar{ width:52px;height:52px;border-radius:50%;object-fit:cover; transition:transform .3s; filter:drop-shadow(0 0 8px rgba(0,0,0,.5)); }
-  .entry.gold .mascot-avatar{ transform:scale(1.15); }
+  .entry.gold .mascot-avatar{ transform:scale(1.3); width:60px; height:60px; box-shadow:0 0 0 3px var(--brass), 0 0 20px rgba(255,176,32,.6) !important; }
   .team-name-row{ display:flex; align-items:center; gap:10px; }
   .rank-num{ font-family:'Orbitron','IBM Plex Mono',monospace; font-size:26px;font-weight:800; color:var(--ink-soft); text-align:center;
     width:44px;height:44px;line-height:44px;border-radius:50%; background:rgba(255,255,255,.04); margin:0 auto; }
-  #rankingList .entry:nth-child(1) .rank-num{ background:radial-gradient(circle,#ffe9b0,var(--brass) 70%); color:#3a2400; box-shadow:0 0 18px rgba(255,176,32,.6); }
+  #rankingList .entry:nth-child(1) .rank-num{ background:radial-gradient(circle,#ffe9b0,var(--brass) 70%); color:#3a2400; box-shadow:0 0 18px rgba(255,176,32,.6);
+    width:52px; height:52px; line-height:52px; font-size:30px; }
   #rankingList .entry:nth-child(2) .rank-num{ background:radial-gradient(circle,#f2f6fb,var(--silver) 70%); color:#2a3444; box-shadow:0 0 14px rgba(201,214,232,.5); }
   #rankingList .entry:nth-child(3) .rank-num{ background:radial-gradient(circle,#f4c79a,var(--bronze) 70%); color:#3a2000; box-shadow:0 0 14px rgba(224,153,94,.5); }
-  #rankingList .entry:nth-child(1) .rank-num::before{ content:"🥇"; position:absolute; margin-top:-38px; font-size:16px; }
+  #rankingList .entry:nth-child(1) .rank-num::before{ content:"🥇"; position:absolute; margin-top:-42px; font-size:20px; }
   #rankingList .entry:nth-child(2) .rank-num::before{ content:"🥈"; position:absolute; margin-top:-38px; font-size:16px; }
   #rankingList .entry:nth-child(3) .rank-num::before{ content:"🥉"; position:absolute; margin-top:-38px; font-size:16px; }
   .entry.gold .rank-num{color:var(--stamp-red);}
   .team-name{ font-family:'Oswald',sans-serif; font-weight:600; font-size:19px;text-transform:uppercase;letter-spacing:.02em; margin:0 0 4px; color:var(--ink); }
+  .entry.gold .team-name{ font-size:24px; font-weight:800; color:#2a1a00; text-shadow:0 1px 0 rgba(255,255,255,.4); }
   .breakdown{ display:flex;gap:14px;margin-top:8px;flex-wrap:wrap; }
   .chip{ font-family:'IBM Plex Mono',monospace; font-size:11px; background:var(--paper-dim); padding:3px 8px; border-radius:999px; color:var(--ink-soft); }
   .chip b{color:var(--ink);}
   .total-box{text-align:right;}
   .entry.gold .total-box{ padding-top:20px; }
   .total-num{ font-family:'Orbitron','IBM Plex Mono',monospace; font-size:28px;font-weight:800;color:var(--brass-bright); line-height:1; text-shadow:0 0 16px rgba(255,176,32,.4); }
+  .entry.gold .total-num{ font-size:34px; color:#8a3d00; text-shadow:0 0 18px rgba(255,176,32,.5); }
   .total-label{font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-soft);}
+  .entry.gold .total-label{ color:#8a5200; }
   .stamp{ position:absolute;top:-16px;right:-12px; font-family:'Orbitron','Oswald',sans-serif; font-size:10px;letter-spacing:.08em; color:#3a2400;
     background:radial-gradient(circle,#ffe9b0,var(--brass) 75%); border:2px solid #ffe9b0; border-radius:50%; width:56px;height:56px;
     display:flex;align-items:center;justify-content:center; text-align:center; transform:rotate(-12deg); text-transform:uppercase; line-height:1.05;
@@ -160,7 +175,7 @@
   .user-search-results{
     position:absolute; top:100%; left:0; right:0; z-index:20;
     background:#0f1e3a; border:1px solid var(--line); border-radius:8px;
-    margin-top:4px; max-height:220px; overflow-y:auto; display:none;
+    margin-top:4px; max-height:300px; overflow-y:auto; display:none;
     box-shadow:0 10px 24px rgba(0,0,0,.4);
   }
   .user-search-results.open{ display:block; }
@@ -594,6 +609,7 @@ function renderRanking(){
       <div class="rank-num">${String(i+1).padStart(2,'0')}</div>
       ${t.mascote ? `<img class="mascot-avatar" src="${t.mascote}" alt="Mascote ${escapeHtml(t.name)}" style="box-shadow:0 0 0 2px ${t.color || '#ccc'}">` : '<div></div>'}
       <div>
+        ${isGold ? '<p class="leader-tag">👑 Equipe líder</p>' : ''}
         <p class="team-name" style="margin:0;">${escapeHtml(t.name)}</p>
       </div>
       <div class="total-box">
@@ -861,7 +877,7 @@ function renderUserSearchResults(term){
   const usersArray = Object.values(state.users || {});
   const t = normalizeSearch(term);
   let matches = t ? usersArray.filter(u => normalizeSearch(u.name).includes(t)) : usersArray;
-  matches = matches.slice(0, 8);
+  matches = matches.slice(0, 40);
   if(matches.length === 0){
     box.innerHTML = '<div class="result-empty">Nenhum participante encontrado.</div>';
   } else {
