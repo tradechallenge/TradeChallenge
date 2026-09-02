@@ -186,6 +186,21 @@
   .loading::after{ content:"_"; animation:blink 1s step-start infinite; }
   @keyframes blink{50%{opacity:0;}}
 
+  /* RANKING INDIVIDUAL */
+  .individual-row{ display:grid; grid-template-columns:44px 1fr auto; gap:14px; align-items:center;
+    background:linear-gradient(135deg,var(--paper),#0b1530); color:var(--ink); border-radius:12px; padding:12px 18px; margin-bottom:10px;
+    border-left:4px solid var(--line); box-shadow:0 0 0 1px rgba(255,255,255,.04), 0 8px 18px -12px rgba(0,0,0,.6); }
+  .individual-row.me{ border-left-color:var(--cyan); box-shadow:0 0 0 1px rgba(0,229,255,.3), 0 0 20px -4px rgba(0,229,255,.4); background:linear-gradient(135deg,#0d2338,#0b1530); }
+  .individual-rank{ font-family:'Orbitron','IBM Plex Mono',monospace; font-size:16px; font-weight:800; color:var(--ink-soft); text-align:center;
+    width:36px;height:36px;line-height:36px;border-radius:50%; background:rgba(255,255,255,.04); }
+  .individual-row:nth-child(1) .individual-rank{ background:radial-gradient(circle,#ffe9b0,var(--brass) 70%); color:#3a2400; }
+  .individual-row:nth-child(2) .individual-rank{ background:radial-gradient(circle,#f2f6fb,var(--silver) 70%); color:#2a3444; }
+  .individual-row:nth-child(3) .individual-rank{ background:radial-gradient(circle,#f4c79a,var(--bronze) 70%); color:#3a2000; }
+  .individual-name{ font-family:'Oswald',sans-serif; font-weight:600; font-size:15px; margin:0; color:var(--ink); }
+  .individual-team{ font-family:'IBM Plex Mono',monospace; font-size:11px; margin:2px 0 0; color:var(--ink-soft); text-transform:uppercase; letter-spacing:.04em; }
+  .individual-pts{ font-family:'Orbitron','IBM Plex Mono',monospace; font-size:20px; font-weight:800; color:var(--brass-bright); text-align:right; line-height:1; }
+  .individual-pts span{ display:block; font-family:'IBM Plex Mono',monospace; font-size:9px; font-weight:600; letter-spacing:.1em; text-transform:uppercase; color:var(--ink-soft); margin-top:2px; }
+
   /* PREMIAÇÃO — CHEQUES */
   .cheques-grid{ display:grid; grid-template-columns:repeat(auto-fill,minmax(320px,1fr)); gap:22px; }
   .cheque{
@@ -265,6 +280,7 @@
     
     <div class="tabs">
       <button class="tab-btn active" data-tab="ranking">Ranking</button>
+      <button class="tab-btn" data-tab="rankingIndividual">Ranking Individual</button>
       <button class="tab-btn" data-tab="premiacao">Premiação</button>
     </div>
 
@@ -272,9 +288,16 @@
       <div id="rankingList" class="loading">Sincronizando com o banco de dados...</div>
     </div>
 
+    <div id="rankingIndividual" class="panel">
+      <p style="font-family:'IBM Plex Mono',monospace; font-size:12px; color:var(--ink-soft); margin:0 0 16px;">
+        Pontuação individual de cada participante. Sua linha aparece destacada.
+      </p>
+      <div id="individualRankingList" class="loading">Sincronizando com o banco de dados...</div>
+    </div>
+
     <div id="premiacao" class="panel">
       <p style="font-family:'IBM Plex Mono',monospace; font-size:12px; color:var(--ink-soft); margin:0 0 18px;">
-        Premiação em dinheiro por integrante da equipe, de acordo com a posição no ranking geral. Só recebe premiação a equipe que atingir no mínimo <b id="minPontosLabel" style="color:var(--brass-bright);">15</b> pontos.
+        Premiação em dinheiro por integrante da equipe, de acordo com a posição da equipe no ranking geral. Só recebe a premiação quem atingir, individualmente, no mínimo <b id="minPontosLabel" style="color:var(--brass-bright);">15</b> pontos — integrantes abaixo disso não entram no cálculo do valor total pago à equipe.
       </p>
       <div id="chequesGrid" class="cheques-grid"></div>
     </div>
@@ -304,10 +327,10 @@
 
       <h3>1. Configuração da Premiação</h3>
       <p style="font-size:12px;color:#a9bcd8;font-family:'IBM Plex Mono',monospace;margin:0 0 12px;">
-        Defina o valor por pessoa pago em cada posição do ranking e a pontuação mínima exigida para a equipe ter direito à premiação. Os cheques da aba "Premiação" são recalculados automaticamente.
+        Defina o valor por pessoa pago em cada posição do ranking e a pontuação mínima que cada integrante precisa atingir individualmente para ter direito à premiação. Os cheques da aba "Premiação" são recalculados automaticamente.
       </p>
       <div class="admin-row">
-        <label>Pontuação mínima para ter direito à premiação</label>
+        <label>Pontuação mínima por integrante para ter direito à premiação</label>
         <input id="adm-min-pontos" type="number" style="width:110px">
         <button class="save-btn" id="adm-save-min-pontos">Salvar Mínimo</button>
       </div>
@@ -340,8 +363,7 @@
           <option value="dinamica_equipe" data-valor="5">Dinâmica de equipe (5 pts)</option>
           <option value="raciocinio_logico" data-valor="5">Raciocínio lógico (5 pts)</option>
           <option value="acao_social" data-valor="10">Ação social (10 pts)</option>
-          <option value="engajamento" data-valor="1">Engajamento (1 pt)</option>
-          <option value="desafio_surpresa" data-valor="10">Desafio surpresa (10 pts)</option>
+          <option value="desafio_extra" data-valor="10">Desafio extra (10 pts)</option>
         </select>
         <input id="adm-pontos" type="number" placeholder="+ Pontos" style="width:100px" value="1">
         <button class="save-btn" id="adm-save-pontos">Lançar Pontos</button>
@@ -531,7 +553,7 @@ function updateAdminVisibility(){
 function render(){
   if(!currentUser) return;
   updateAdminVisibility();
-  renderRanking(); renderPremiacao();
+  renderRanking(); renderIndividualRanking(); renderPremiacao();
   if(isAdmin()){
     renderAdminSelects(); renderAdminEmails(); renderAdminPremiacaoTable();
   }
@@ -540,12 +562,12 @@ function render(){
 function getTeamAggregates(){
   const usersArray = Object.values(state.users || {});
   return state.teams.map(t => {
-    const members = usersArray.filter(u => u.teamId === t.id);
-    const total = members.reduce((sum, u) => {
+    const members = usersArray.filter(u => u.teamId === t.id).map(u => {
       const userTotal = Object.values(u.pontos || {}).reduce((s,v) => s + (v || 0), 0);
-      return sum + userTotal;
-    }, 0);
-    return { ...t, total, membros: members.length };
+      return { ...u, totalPontos: userTotal };
+    });
+    const total = members.reduce((sum, u) => sum + u.totalPontos, 0);
+    return { ...t, total, membros: members.length, membrosDetalhe: members };
   }).sort((a,b) => b.total - a.total);
 }
 
@@ -573,6 +595,33 @@ function renderRanking(){
   }).join('');
 }
 
+function renderIndividualRanking(){
+  const usersArray = Object.values(state.users || {});
+  const ranked = usersArray.map(u => {
+    const total = Object.values(u.pontos || {}).reduce((s,v) => s + (v || 0), 0);
+    const teamName = state.teams.find(t => t.id === u.teamId)?.name || 'Sem equipe';
+    return { ...u, total, teamName };
+  }).sort((a,b) => b.total - a.total);
+
+  const el = document.getElementById('individualRankingList');
+  if(ranked.length === 0){
+    el.innerHTML = `<div class="log-row"><span>Nenhum participante cadastrado ainda.</span></div>`;
+    return;
+  }
+  el.innerHTML = ranked.map((u,i) => {
+    const isMe = currentUser && u.id === currentUser.id;
+    return `
+    <div class="individual-row ${isMe ? 'me' : ''}">
+      <div class="individual-rank">${String(i+1).padStart(2,'0')}</div>
+      <div class="individual-info">
+        <p class="individual-name">${escapeHtml(u.name)}${isMe ? ' <span style="color:var(--cyan);">(você)</span>' : ''}</p>
+        <p class="individual-team">${escapeHtml(u.teamName)}</p>
+      </div>
+      <div class="individual-pts">${u.total}<span>pts</span></div>
+    </div>`;
+  }).join('');
+}
+
 function fmtBRL(v){
   return (v||0).toLocaleString('pt-BR', { style:'currency', currency:'BRL' });
 }
@@ -589,12 +638,14 @@ function renderPremiacao(){
   grid.innerHTML = teamAggregates.map((t, i) => {
     const posicao = i + 1;
     const valorPorPessoa = (cfg.valores && cfg.valores[posicao] !== undefined) ? cfg.valores[posicao] : 0;
-    const elegivel = t.total >= minPontos;
-    const total = elegivel ? valorPorPessoa * t.membros : 0;
+    const membrosElegiveis = t.membrosDetalhe.filter(u => u.totalPontos >= minPontos);
+    const qtdElegiveis = membrosElegiveis.length;
+    const total = valorPorPessoa * qtdElegiveis;
+    const ninguemElegivel = qtdElegiveis === 0;
 
     return `
-    <div class="cheque ${posicao === 1 ? 'top1' : ''} ${elegivel ? '' : 'inelegivel'}">
-      ${!elegivel ? '<div class="cheque-stamp">Não liberado</div>' : ''}
+    <div class="cheque ${posicao === 1 ? 'top1' : ''} ${ninguemElegivel ? 'inelegivel' : ''}">
+      ${ninguemElegivel ? '<div class="cheque-stamp">Não liberado</div>' : ''}
       <div class="cheque-top">
         <div>
           <div class="cheque-pos">${posicao}° Lugar</div>
@@ -603,12 +654,12 @@ function renderPremiacao(){
         <div class="cheque-serial">Nº ${String(posicao).padStart(4,'0')}/2026</div>
       </div>
       <div class="cheque-line">
-        <label>Pontos da equipe</label>
+        <label>Pontos da equipe (ranking)</label>
         <span><b>${t.total}</b> pts</span>
       </div>
       <div class="cheque-line">
-        <label>Integrantes</label>
-        <span><b>${t.membros}</b></span>
+        <label>Integrantes elegíveis (≥ ${minPontos} pts cada)</label>
+        <span><b>${qtdElegiveis}</b> de ${t.membros}</span>
       </div>
       <div class="cheque-line">
         <label>Valor por pessoa</label>
@@ -617,7 +668,7 @@ function renderPremiacao(){
           : `<span>${fmtBRL(valorPorPessoa)}</span>`}
       </div>
       <div class="cheque-total-row">
-        <span class="cheque-total-label">${elegivel ? 'Total a pagar' : 'Total (mínimo de pontos não atingido)'}</span>
+        <span class="cheque-total-label">${ninguemElegivel ? 'Total (ninguém atingiu o mínimo)' : 'Total a pagar'}</span>
         <span class="cheque-total-value">${fmtBRL(total)}</span>
       </div>
     </div>`;
