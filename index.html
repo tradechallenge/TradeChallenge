@@ -220,6 +220,7 @@
   .cheque-total-row{ display:flex; justify-content:space-between; align-items:center; margin-top:14px; padding-top:12px; border-top:2px solid #8a5200; }
   .cheque-total-label{ font-family:'Orbitron','Oswald',sans-serif; font-size:11px; text-transform:uppercase; letter-spacing:.06em; color:#6b5330; }
   .cheque-total-value{ font-family:'Orbitron','IBM Plex Mono',monospace; font-size:24px; font-weight:800; color:#8a3d00; }
+  .cheque-footnote{ margin-top:8px; font-size:10px; text-align:right; color:#8a7550; font-style:italic; letter-spacing:.02em; }
 </style>
 </head>
 <body>
@@ -287,7 +288,7 @@
 
     <div id="premiacao" class="panel">
       <p style="font-family:'IBM Plex Mono',monospace; font-size:12px; color:var(--ink-soft); margin:0 0 18px;">
-        Premiação em dinheiro por integrante da equipe, de acordo com a posição da equipe no ranking geral. Só recebe a premiação quem atingir, individualmente, no mínimo <b id="minPontosLabel" style="color:var(--brass-bright);">15</b> pontos — integrantes abaixo disso não entram no cálculo do valor total pago à equipe.
+        Premiação em dinheiro por integrante da equipe, de acordo com a posição da equipe no ranking geral. Só recebe a premiação quem atingir, individualmente, no mínimo <b id="minPontosLabel" style="color:var(--brass-bright);">15</b> pontos — integrantes abaixo disso não entram no cálculo do valor total pago à equipe. Esse valor será utilizado no Happy Hour da equipe.
       </p>
       <div id="chequesGrid" class="cheques-grid"></div>
     </div>
@@ -652,6 +653,7 @@ function renderPremiacao(){
         <span class="cheque-total-label">Valor</span>
         <span class="cheque-total-value">${fmtBRL(valorCheque)}</span>
       </div>
+      <div class="cheque-footnote">Valor destinado ao Happy Hour da equipe</div>
     </div>`;
   }).join('');
 }
