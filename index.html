@@ -211,25 +211,15 @@
   }
   .cheque::before{ content:""; position:absolute; top:0;left:0;right:0;height:5px; background:linear-gradient(90deg,var(--brass),var(--cyan),var(--brass)); }
   .cheque.top1{ border-color:var(--stamp-red); box-shadow:0 0 0 1px rgba(255,56,100,.3), 0 0 40px -8px rgba(255,176,32,.55), 0 18px 36px -16px rgba(0,0,0,.65); }
-  .cheque.inelegivel{ opacity:.6; filter:grayscale(.5); }
   .cheque-top{ display:flex; justify-content:space-between; align-items:flex-start; gap:10px; margin-bottom:14px; }
   .cheque-pos{ font-family:'Orbitron','Oswald',sans-serif; font-weight:800; font-size:13px; letter-spacing:.08em; text-transform:uppercase; color:#8a5200; }
   .cheque-serial{ font-size:10px; color:#8a7550; letter-spacing:.08em; }
   .cheque-team{ font-family:'Oswald',sans-serif; font-weight:700; font-size:20px; text-transform:uppercase; margin:0 0 2px; color:#1a1200; }
   .cheque-line{ display:flex; justify-content:space-between; align-items:center; gap:10px; border-bottom:1px dashed #b99456; padding:8px 0; font-size:13px; }
   .cheque-line label{ color:#6b5330; font-size:11px; text-transform:uppercase; letter-spacing:.06em; }
-  .cheque-line input.cheque-valor-input{
-    width:90px; text-align:right; background:#fffdf4; border:1px solid #b99456; color:#241800;
-    font-family:'IBM Plex Mono',monospace; font-weight:600; border-radius:6px; padding:4px 8px;
-  }
   .cheque-total-row{ display:flex; justify-content:space-between; align-items:center; margin-top:14px; padding-top:12px; border-top:2px solid #8a5200; }
   .cheque-total-label{ font-family:'Orbitron','Oswald',sans-serif; font-size:11px; text-transform:uppercase; letter-spacing:.06em; color:#6b5330; }
   .cheque-total-value{ font-family:'Orbitron','IBM Plex Mono',monospace; font-size:24px; font-weight:800; color:#8a3d00; }
-  .cheque-stamp{
-    position:absolute; top:14px; right:-32px; transform:rotate(35deg); background:var(--stamp-red); color:#fff;
-    font-family:'Orbitron','Oswald',sans-serif; font-size:11px; font-weight:800; letter-spacing:.08em;
-    text-transform:uppercase; padding:4px 40px; box-shadow:0 2px 8px rgba(0,0,0,.35);
-  }
 </style>
 </head>
 <body>
@@ -327,7 +317,7 @@
 
       <h3>1. Configuração da Premiação</h3>
       <p style="font-size:12px;color:#a9bcd8;font-family:'IBM Plex Mono',monospace;margin:0 0 12px;">
-        Defina o valor por pessoa pago em cada posição do ranking e a pontuação mínima que cada integrante precisa atingir individualmente para ter direito à premiação. Os cheques da aba "Premiação" são recalculados automaticamente.
+        Defina o valor fixo de cada cheque (o total pago naquela posição) e a pontuação mínima que cada integrante precisa atingir individualmente para ter direito à premiação. O valor por pessoa é apenas calculado automaticamente (valor do cheque ÷ integrantes elegíveis) e muda sozinho conforme mais gente vai batendo o mínimo — você só precisa alterar o valor do cheque se o total mudar.
       </p>
       <div class="admin-row">
         <label>Pontuação mínima por integrante para ter direito à premiação</label>
@@ -339,7 +329,8 @@
           <thead>
             <tr>
               <th>Posição</th>
-              <th>Valor por pessoa (R$)</th>
+              <th>Valor do Cheque (R$)</th>
+              <th>Valor por Pessoa (calculado)</th>
               <th>Ação</th>
             </tr>
           </thead>
@@ -408,7 +399,11 @@ const DEFAULT_STATE = {
   users: {},
   premiacaoConfig: {
     minPontos: 15,
-    valores: { 1: 120, 2: 100, 3: 70, 4: 50 }
+    // valores = valor FIXO do cheque (total) pago em cada posição do ranking.
+    // O valor por pessoa não é configurado aqui: é calculado automaticamente
+    // (valor do cheque ÷ integrantes elegíveis) e muda sozinho conforme mais
+    // participantes forem batendo o mínimo de pontos.
+    valores: { 1: 4200, 2: 3500, 3: 2450, 4: 1750 }
   },
   log: []
 };
@@ -632,20 +627,16 @@ function renderPremiacao(){
   document.getElementById('minPontosLabel').textContent = minPontos;
 
   const teamAggregates = getTeamAggregates();
-  const admin = isAdmin();
 
   const grid = document.getElementById('chequesGrid');
   grid.innerHTML = teamAggregates.map((t, i) => {
     const posicao = i + 1;
-    const valorPorPessoa = (cfg.valores && cfg.valores[posicao] !== undefined) ? cfg.valores[posicao] : 0;
+    const valorCheque = (cfg.valores && cfg.valores[posicao] !== undefined) ? cfg.valores[posicao] : 0;
     const membrosElegiveis = t.membrosDetalhe.filter(u => u.totalPontos >= minPontos);
     const qtdElegiveis = membrosElegiveis.length;
-    const total = valorPorPessoa * qtdElegiveis;
-    const ninguemElegivel = qtdElegiveis === 0;
 
     return `
-    <div class="cheque ${posicao === 1 ? 'top1' : ''} ${ninguemElegivel ? 'inelegivel' : ''}">
-      ${ninguemElegivel ? '<div class="cheque-stamp">Não liberado</div>' : ''}
+    <div class="cheque ${posicao === 1 ? 'top1' : ''}">
       <div class="cheque-top">
         <div>
           <div class="cheque-pos">${posicao}° Lugar</div>
@@ -654,54 +645,34 @@ function renderPremiacao(){
         <div class="cheque-serial">Nº ${String(posicao).padStart(4,'0')}/2026</div>
       </div>
       <div class="cheque-line">
-        <label>Pontos da equipe (ranking)</label>
-        <span><b>${t.total}</b> pts</span>
-      </div>
-      <div class="cheque-line">
         <label>Integrantes elegíveis (≥ ${minPontos} pts cada)</label>
         <span><b>${qtdElegiveis}</b> de ${t.membros}</span>
       </div>
-      <div class="cheque-line">
-        <label>Valor por pessoa</label>
-        ${admin
-          ? `<span>R$ <input type="number" min="0" step="1" class="cheque-valor-input" data-posicao="${posicao}" value="${valorPorPessoa}"></span>`
-          : `<span>${fmtBRL(valorPorPessoa)}</span>`}
-      </div>
       <div class="cheque-total-row">
-        <span class="cheque-total-label">${ninguemElegivel ? 'Total (ninguém atingiu o mínimo)' : 'Total a pagar'}</span>
-        <span class="cheque-total-value">${fmtBRL(total)}</span>
+        <span class="cheque-total-label">Valor</span>
+        <span class="cheque-total-value">${fmtBRL(valorCheque)}</span>
       </div>
     </div>`;
   }).join('');
-
-  if(admin){
-    grid.querySelectorAll('.cheque-valor-input').forEach(input => {
-      input.addEventListener('change', async (e) => {
-        const posicao = e.target.dataset.posicao;
-        const val = parseFloat(e.target.value);
-        if(isNaN(val) || val < 0){ showToast("Informe um valor válido."); return; }
-        if(!state.premiacaoConfig) state.premiacaoConfig = JSON.parse(JSON.stringify(DEFAULT_STATE.premiacaoConfig));
-        if(!state.premiacaoConfig.valores) state.premiacaoConfig.valores = {};
-        state.premiacaoConfig.valores[posicao] = val;
-        await saveState();
-        showToast(`Valor do ${posicao}° lugar atualizado.`);
-      });
-    });
-  }
 }
 
 function renderAdminPremiacaoTable(){
   const cfg = state.premiacaoConfig || DEFAULT_STATE.premiacaoConfig;
   document.getElementById('adm-min-pontos').value = cfg.minPontos;
 
+  const teamAggregates = getTeamAggregates();
   const tbody = document.getElementById('adminPremiacaoTable');
   const posicoes = [1,2,3,4];
   tbody.innerHTML = posicoes.map(pos => {
-    const valor = (cfg.valores && cfg.valores[pos] !== undefined) ? cfg.valores[pos] : 0;
+    const valorCheque = (cfg.valores && cfg.valores[pos] !== undefined) ? cfg.valores[pos] : 0;
+    const time = teamAggregates[pos - 1];
+    const qtdElegiveis = time ? time.membrosDetalhe.filter(u => u.totalPontos >= cfg.minPontos).length : 0;
+    const valorPorPessoa = qtdElegiveis > 0 ? (valorCheque / qtdElegiveis) : 0;
     return `
       <tr>
         <td>${pos}° Lugar</td>
-        <td><input type="number" min="0" step="1" class="adm-premiacao-valor" data-posicao="${pos}" value="${valor}" style="width:110px"></td>
+        <td><input type="number" min="0" step="1" class="adm-premiacao-valor" data-posicao="${pos}" value="${valorCheque}" style="width:110px"></td>
+        <td>${qtdElegiveis > 0 ? fmtBRL(valorPorPessoa) : '—'} <span style="font-size:10px;color:var(--ink-soft);">(${qtdElegiveis} elegível${qtdElegiveis===1?'':'eis'})</span></td>
         <td><button class="save-btn" data-posicao="${pos}" data-action="save-premiacao">Salvar</button></td>
       </tr>`;
   }).join('');
