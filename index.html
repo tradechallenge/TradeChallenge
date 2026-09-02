@@ -203,14 +203,39 @@
 
   /* PREMIAÇÃO — CHEQUES */
   .cheques-grid{ display:grid; grid-template-columns:repeat(auto-fill,minmax(320px,1fr)); gap:22px; }
+  @keyframes cheque-in{
+    0%{ opacity:0; transform:translateY(22px) scale(.96); }
+    100%{ opacity:1; transform:translateY(0) scale(1); }
+  }
+  @keyframes cheque-glow-pulse{
+    0%,100%{ box-shadow:0 0 0 1px rgba(255,56,100,.3), 0 0 40px -8px rgba(255,176,32,.55), 0 18px 36px -16px rgba(0,0,0,.65); }
+    50%{ box-shadow:0 0 0 1px rgba(255,56,100,.5), 0 0 60px -4px rgba(255,176,32,.85), 0 18px 36px -16px rgba(0,0,0,.65); }
+  }
+  @keyframes cheque-sheen{
+    0%{ background-position:-150% 0; }
+    100%{ background-position:250% 0; }
+  }
   .cheque{
     position:relative; background:linear-gradient(160deg,#fff8e6,#f3e6c4);
     border:2px solid var(--brass); border-radius:14px; padding:20px 22px 18px; color:#241800;
     box-shadow:0 0 0 1px rgba(255,176,32,.25), 0 18px 36px -16px rgba(0,0,0,.65);
     font-family:'IBM Plex Mono',monospace; overflow:hidden;
+    opacity:0; animation:cheque-in .55s cubic-bezier(.2,.8,.3,1) forwards;
+    transition:transform .25s ease, box-shadow .25s ease;
   }
+  .cheque:nth-child(1){ animation-delay:.05s; }
+  .cheque:nth-child(2){ animation-delay:.2s; }
+  .cheque:nth-child(3){ animation-delay:.35s; }
+  .cheque:nth-child(4){ animation-delay:.5s; }
+  .cheque:hover{ transform:translateY(-6px); box-shadow:0 0 0 1px rgba(255,176,32,.35), 0 26px 44px -18px rgba(0,0,0,.75); }
   .cheque::before{ content:""; position:absolute; top:0;left:0;right:0;height:5px; background:linear-gradient(90deg,var(--brass),var(--cyan),var(--brass)); }
-  .cheque.top1{ border-color:var(--stamp-red); box-shadow:0 0 0 1px rgba(255,56,100,.3), 0 0 40px -8px rgba(255,176,32,.55), 0 18px 36px -16px rgba(0,0,0,.65); }
+  .cheque::after{
+    content:""; position:absolute; top:0; left:0; right:0; bottom:0; pointer-events:none;
+    background:linear-gradient(120deg, transparent 40%, rgba(255,255,255,.55) 50%, transparent 60%);
+    background-size:250% 100%; background-repeat:no-repeat; background-position:-150% 0;
+    animation:cheque-sheen 3.2s ease-in-out 1.1s infinite;
+  }
+  .cheque.top1{ border-color:var(--stamp-red); animation:cheque-in .55s cubic-bezier(.2,.8,.3,1) forwards, cheque-glow-pulse 2.6s ease-in-out 1s infinite; }
   .cheque-top{ display:flex; justify-content:space-between; align-items:flex-start; gap:10px; margin-bottom:14px; }
   .cheque-pos{ font-family:'Orbitron','Oswald',sans-serif; font-weight:800; font-size:13px; letter-spacing:.08em; text-transform:uppercase; color:#8a5200; }
   .cheque-serial{ font-size:10px; color:#8a7550; letter-spacing:.08em; }
@@ -281,14 +306,14 @@
 
     <div id="rankingIndividual" class="panel">
       <p style="font-family:'IBM Plex Mono',monospace; font-size:12px; color:var(--ink-soft); margin:0 0 16px;">
-        Pontuação individual de cada participante.
+        Pontuação individual de cada participante. Sua linha aparece destacada.
       </p>
       <div id="individualRankingList" class="loading">Sincronizando com o banco de dados...</div>
     </div>
 
     <div id="premiacao" class="panel">
       <p style="font-family:'IBM Plex Mono',monospace; font-size:12px; color:var(--ink-soft); margin:0 0 18px;">
-        Só recebe a premiação quem atingir, individualmente, no mínimo <b id="minPontosLabel" style="color:var(--brass-bright);">15</b> pontos — integrantes abaixo disso não entram no cálculo do valor total pago à equipe. Esse valor será utilizado no Happy Hour da equipe.
+        Premiação em dinheiro por integrante da equipe, de acordo com a posição da equipe no ranking geral. Só recebe a premiação quem atingir, individualmente, no mínimo <b id="minPontosLabel" style="color:var(--brass-bright);">15</b> pontos — integrantes abaixo disso não entram no cálculo do valor total pago à equipe. Esse valor será utilizado no Happy Hour da equipe.
       </p>
       <div id="chequesGrid" class="cheques-grid"></div>
     </div>
