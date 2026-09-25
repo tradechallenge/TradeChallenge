@@ -18,35 +18,38 @@
 
 <style>
   :root{
-    --navy-deep:#05070f; --navy-panel:#101a34; --navy-panel-2:#182548;
-    --paper:#101c38; --paper-dim:#1c2c52; --ink:#eaf2ff; --ink-soft:#8ba0c9;
-    --brass:#ffb020; --brass-bright:#ffd166; --stamp-red:#ff3864;
-    --stamp-red-bright:#ff6b8b; --line:#28345c; --ok-green:#2fe88a;
-    --cyan:#00e5ff; --silver:#c9d6e8; --bronze:#e0995e;
+    --navy-deep:#0a1130; --navy-panel:#182458; --navy-panel-2:#22326b;
+    --paper:#16224a; --paper-dim:#2a3c6e; --ink:#f2f6ff; --ink-soft:#a8bade;
+    --brass:#ffaa00; --brass-bright:#ffdc78; --stamp-red:#ff2d5f;
+    --stamp-red-bright:#ff86a8; --line:#33417a; --ok-green:#2ff09a;
+    --cyan:#1eeeff; --silver:#dbe6f7; --bronze:#e8a768;
+    --violet:#8a5cf0; --violet-soft:#4b2e9a;
   }
   *{box-sizing:border-box;}
   body{
     margin:0;
     background:
-      radial-gradient(circle at 12% -5%, rgba(255,176,32,.16) 0%, transparent 40%),
-      radial-gradient(circle at 92% 6%, rgba(0,229,255,.12) 0%, transparent 42%),
-      radial-gradient(circle at 50% 100%, rgba(122,63,176,.16) 0%, transparent 55%),
-      repeating-linear-gradient(0deg, rgba(255,255,255,.015) 0 1px, transparent 1px 34px),
-      repeating-linear-gradient(90deg, rgba(255,255,255,.015) 0 1px, transparent 1px 34px),
-      var(--navy-deep);
+      radial-gradient(circle at 12% -5%, rgba(255,170,0,.11) 0%, transparent 42%),
+      radial-gradient(circle at 92% 4%, rgba(30,238,255,.088) 0%, transparent 44%),
+      radial-gradient(circle at 50% 105%, rgba(138,92,240,.11) 0%, transparent 58%),
+      radial-gradient(circle at 6% 70%, rgba(255,45,95,.05) 0%, transparent 40%),
+      repeating-linear-gradient(0deg, rgba(255,255,255,.018) 0 1px, transparent 1px 34px),
+      repeating-linear-gradient(90deg, rgba(255,255,255,.018) 0 1px, transparent 1px 34px),
+      linear-gradient(180deg, #0d1638 0%, var(--navy-deep) 60%);
     color:var(--paper); font-family:'IBM Plex Sans', sans-serif; min-height:100vh; padding:28px 16px 60px;
+    overflow-x:hidden;
   }
   body{ color:var(--ink); }
-  .wrap{max-width:980px;margin:0 auto;}
+  .wrap{max-width:980px;margin:0 auto; position:relative; z-index:1;}
 
-  .manifest-head{ border:1px solid var(--line); background:linear-gradient(160deg,#101d3c,#0a1428); border-radius:14px; padding:24px 26px 20px; position:relative; overflow:hidden; box-shadow:0 0 0 1px rgba(255,176,32,.08), 0 18px 40px -18px rgba(0,0,0,.7); }
-  .manifest-head::before{ content:""; position:absolute;top:0;left:0;right:0;height:3px; background:linear-gradient(90deg, transparent, var(--brass), var(--cyan), var(--brass), transparent); background-size:200% 100%; animation:shimmer 4s linear infinite; }
+  .manifest-head{ border:1px solid var(--line); background:linear-gradient(160deg,#182552 0%,#0d1836 55%,#070d20 100%); border-radius:14px; padding:24px 26px 20px; position:relative; overflow:hidden; box-shadow:0 0 0 1px rgba(255,170,0,.066), 0 0 60px -28px rgba(138,92,240,.275), 0 18px 40px -18px rgba(0,0,0,.75); }
+  .manifest-head::before{ content:""; position:absolute;top:0;left:0;right:0;height:3px; background:linear-gradient(90deg, transparent, var(--brass), var(--cyan), var(--violet), var(--brass), transparent); background-size:200% 100%; animation:shimmer 4s linear infinite; }
   @keyframes shimmer{ 0%{background-position:0% 0;} 100%{background-position:200% 0;} }
-  .eyebrow{ font-family:'IBM Plex Mono',monospace; font-size:11px;letter-spacing:.22em;text-transform:uppercase; color:var(--brass-bright); display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px; text-shadow:0 0 12px rgba(255,176,32,.5); }
+  .eyebrow{ font-family:'IBM Plex Mono',monospace; font-size:11px;letter-spacing:.22em;text-transform:uppercase; color:var(--brass-bright); display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px; text-shadow:0 0 12px rgba(255,170,0,.303); }
   h1{ font-family:'Orbitron','Oswald',sans-serif; font-weight:800; font-size:clamp(28px,5vw,44px); letter-spacing:.02em; margin:10px 0 4px; text-transform:uppercase;
-      background:linear-gradient(180deg,#fff 0%, var(--brass-bright) 55%, var(--brass) 100%); -webkit-background-clip:text; background-clip:text; color:transparent;
-      filter:drop-shadow(0 0 18px rgba(255,176,32,.35)); }
-  .event-logo{ display:block; width:100%; max-width:420px; height:auto; margin:12px 0 6px; filter:drop-shadow(0 0 16px rgba(0,229,255,.25)); }
+      background:linear-gradient(180deg,#fff 0%, var(--brass-bright) 50%, var(--brass) 100%); -webkit-background-clip:text; background-clip:text; color:transparent;
+      filter:drop-shadow(0 0 20px rgba(255,170,0,.22)); }
+  .event-logo{ display:block; width:100%; max-width:420px; height:auto; margin:12px 0 6px; filter:drop-shadow(0 0 16px rgba(30,238,255,.138)); }
   .sub{color:var(--ink-soft);font-size:14px;margin:0;}
 
   /* LOGOS CONTAINER */
@@ -54,30 +57,112 @@
     display: flex; gap: 18px; align-items: center; justify-content: center;
     margin: 18px 0 14px 0; flex-wrap: wrap;
     background: #ffffff; padding: 12px 20px; border-radius: 999px;
-    border: 2px solid var(--brass); box-shadow: 0 0 0 4px rgba(255,176,32,.12), 0 8px 24px rgba(0,0,0,.35);
+    border: 2px solid var(--brass); box-shadow: 0 0 0 4px rgba(255,170,0,.066), 0 8px 24px rgba(0,0,0,.35);
   }
   .logos-container img { height: 30px; max-width: 100%; object-fit: contain; }
   .logos-container img.logo-20 { height: 38px; }
   .logos-container img.logo-tc { height: 34px; }
   .logos-group { display: flex; align-items: center; gap: 8px; }
 
+  /* CENA ANIMADA — NAVIO NO MAR + CAMINHÃO NA ESTRADA (agora ao fundo de todo o site, bem transparente) */
+  .bg-scene{
+    position:fixed; inset:0; width:100vw; height:100vh;
+    overflow:hidden; z-index:0; opacity:.16; pointer-events:none;
+  }
+  .scene-sky{ position:absolute; inset:0; overflow:hidden; }
+  .scene-sun{
+    position:absolute; top:14px; right:14%; width:26px; height:26px; border-radius:50%;
+    background:radial-gradient(circle,#fff5db,var(--brass-bright) 45%,var(--brass) 75%);
+    box-shadow:0 0 30px rgba(255,170,0,.33), 0 0 60px -10px rgba(138,92,240,.22);
+  }
+  .scene-cloud{
+    position:absolute; width:52px; height:14px; border-radius:999px;
+    background:rgba(255,255,255,.16); filter:blur(.3px);
+  }
+  .scene-cloud::before, .scene-cloud::after{
+    content:""; position:absolute; border-radius:999px; background:inherit;
+  }
+  .scene-cloud::before{ width:28px; height:20px; top:-9px; left:6px; }
+  .scene-cloud::after{ width:22px; height:16px; top:-6px; left:26px; }
+  .scene-cloud.c1{ top:18px; left:-80px; animation:cloudDrift 32s linear infinite; }
+  .scene-cloud.c2{ top:34px; left:-80px; animation:cloudDrift 44s linear infinite; animation-delay:-18s; transform:scale(.75); }
+  .scene-cloud.c3{ top:10px; left:-80px; animation:cloudDrift 38s linear infinite; animation-delay:-30s; transform:scale(.6); }
+  @keyframes cloudDrift{ from{ left:-80px; } to{ left:100%; } }
+
+  .scene-sea{
+    position:absolute; left:0; right:0; bottom:22px; height:82px;
+    background:
+      repeating-linear-gradient(120deg, rgba(143,214,255,.1) 0 8px, transparent 8px 26px),
+      linear-gradient(180deg,#164a80 0%,#0c2e56 55%,#081f3e 100%);
+    animation:waveScroll 5s linear infinite;
+  }
+  @keyframes waveScroll{ from{ background-position:0 0, 0 0; } to{ background-position:-120px 0, 0 0; } }
+  .scene-ship{ position:absolute; bottom:6px; width:150px; aspect-ratio:220/110; display:block; left:-190px; }
+  .scene-ship.s1{ animation:sailAcross 24s linear infinite; }
+  .scene-ship.s2{ animation:sailAcross 30s linear infinite; animation-delay:-14s; bottom:2px; width:120px; opacity:.85; }
+  @keyframes sailAcross{ from{ left:-190px; } to{ left:100%; } }
+  .ship-smoke{ animation:smokePuff 2.4s ease-out infinite; transform-origin:182px 8px; }
+  .ship-smoke.sm2{ animation-delay:1.2s; }
+  @keyframes smokePuff{
+    0%{ opacity:.55; transform:translateY(0) scale(1); }
+    100%{ opacity:0; transform:translateY(-16px) scale(2); }
+  }
+
+  .scene-road{
+    position:absolute; left:0; right:0; bottom:0; height:26px;
+    background:linear-gradient(180deg,#1c2230,#0c0e16);
+  }
+  .road-dashes{
+    position:absolute; top:50%; left:0; right:0; height:3px; margin-top:-1.5px;
+    background:repeating-linear-gradient(90deg, var(--brass) 0 16px, transparent 16px 32px);
+    animation:dashScroll 1s linear infinite;
+  }
+  @keyframes dashScroll{ from{ background-position:0 0; } to{ background-position:-32px 0; } }
+  .scene-truck{ position:absolute; bottom:-2px; width:118px; aspect-ratio:170/80; display:block; left:-150px; }
+  .scene-truck.t1{ animation:driveAcross 13s linear infinite; }
+  .scene-truck.t2{ animation:driveAcross 17s linear infinite; animation-delay:-8s; width:96px; opacity:.85; }
+  @keyframes driveAcross{ from{ left:-150px; } to{ left:100%; } }
+  .wheel{ animation:wheelSpin .4s linear infinite; }
+  .wheel.w1{ transform-origin:30px 66px; }
+  .wheel.w2{ transform-origin:70px 66px; }
+  .wheel.w3{ transform-origin:122px 66px; }
+  @keyframes wheelSpin{ to{ transform:rotate(360deg); } }
+
+  @media (max-width:560px){
+    .scene-sea{ height:64px; bottom:18px; }
+    .scene-ship{ width:110px; }
+    .scene-ship.s2{ width:88px; }
+    .scene-road{ height:18px; }
+    .scene-truck{ width:88px; }
+    .scene-truck.t2{ width:72px; }
+  }
+
+  /* CELULAR DEITADO (paisagem) — cena mais discreta pra não competir com o conteúdo */
+  @media (orientation:landscape) and (max-height:500px){
+    .bg-scene{ opacity:.10; }
+    .scene-sea{ height:50px; bottom:14px; }
+    .scene-road{ height:16px; }
+    .scene-truck{ width:80px; }
+    .scene-truck.t2{ width:64px; }
+  }
+
   /* LOGIN VIEW */
-  .login-view{ background:linear-gradient(160deg,#132244,#0a1428); border:1px solid var(--line); border-radius:16px; padding:32px 28px; max-width:420px; margin:40px auto 0; display:flex; flex-direction:column; gap:14px;
-    box-shadow:0 0 0 1px rgba(255,176,32,.1), 0 0 60px -12px rgba(255,176,32,.25), 0 30px 60px -20px rgba(0,0,0,.8); position:relative; }
-  .login-view::before{ content:"⚡"; position:absolute; top:-18px; left:50%; transform:translateX(-50%); font-size:28px; background:radial-gradient(circle,var(--brass) 0%,#c9791b 100%); width:44px;height:44px;border-radius:50%; display:flex;align-items:center;justify-content:center; box-shadow:0 0 24px rgba(255,176,32,.6), 0 0 0 4px var(--navy-deep); }
+  .login-view{ background:linear-gradient(160deg,#1a2856 0%,#0e1a3a 55%,#080e22 100%); border:1px solid var(--line); border-radius:16px; padding:32px 28px; max-width:420px; margin:40px auto 0; display:flex; flex-direction:column; gap:14px;
+    box-shadow:0 0 0 1px rgba(255,170,0,.066), 0 0 70px -14px rgba(138,92,240,.193), 0 0 50px -18px rgba(30,238,255,.11), 0 30px 60px -20px rgba(0,0,0,.85); position:relative; }
+  .login-view::before{ content:"⚡"; position:absolute; top:-18px; left:50%; transform:translateX(-50%); font-size:28px; background:radial-gradient(circle,var(--brass-bright) 0%,var(--brass) 55%,#c9791b 100%); width:44px;height:44px;border-radius:50%; display:flex;align-items:center;justify-content:center; box-shadow:0 0 28px rgba(255,170,0,.358), 0 0 0 4px var(--navy-deep); }
   .login-view h2{ font-family:'Orbitron','Oswald',sans-serif; text-transform:uppercase; margin:6px 0 10px; color:var(--brass-bright); letter-spacing:.06em; text-align:center; font-size:20px; }
   select, input{ font-family:'IBM Plex Mono',monospace; background:var(--navy-deep); color:var(--ink); border:1px solid var(--line); border-radius:8px; padding:11px 12px; font-size:14px; width: 100%; transition:box-shadow .2s, border-color .2s; }
-  select:focus, input:focus{ outline:none; border-color:var(--cyan); box-shadow:0 0 0 3px rgba(0,229,255,.18); }
+  select:focus, input:focus{ outline:none; border-color:var(--cyan); box-shadow:0 0 0 3px rgba(30,238,255,.099); }
   .user-header-info{ margin-top:14px; padding-top:14px; border-top:1px dashed var(--line); font-family:'IBM Plex Mono',monospace; font-size:13px; color:var(--brass-bright); display:flex; justify-content:space-between; flex-wrap:wrap; gap:10px; }
   .logout-btn { background:rgba(255,255,255,.03); border:1px solid var(--line); color:var(--ink-soft); padding:5px 14px; border-radius:999px; cursor:pointer; font-size:11px; font-family:'IBM Plex Mono',monospace; transition:all .2s; }
-  .logout-btn:hover { color:var(--ink); border-color:var(--stamp-red); box-shadow:0 0 12px rgba(255,56,100,.35); }
+  .logout-btn:hover { color:var(--ink); border-color:var(--stamp-red); box-shadow:0 0 12px rgba(255,45,95,.193); }
   .link-btn { font-size:12px; color:var(--cyan); cursor:pointer; text-align:center; text-decoration:underline; font-family:'IBM Plex Mono',monospace; margin-top:8px;}
 
   /* TABS */
   .tabs{display:flex;gap:10px;margin:26px 0 20px;flex-wrap:wrap;}
   .tab-btn{ font-family:'Orbitron','Oswald',sans-serif; text-transform:uppercase; letter-spacing:.06em; font-size:13px; background:rgba(255,255,255,.03); border:1px solid var(--line); color:var(--ink-soft); padding:11px 24px; cursor:pointer; border-radius:999px; transition:all .2s; }
   .tab-btn:hover{ color:var(--ink); border-color:var(--brass); }
-  .tab-btn.active{ background:linear-gradient(135deg,var(--brass),#c9791b); color:#1a1200; border-color:var(--brass); box-shadow:0 0 24px rgba(255,176,32,.45), 0 4px 12px rgba(0,0,0,.35); font-weight:700; }
+  .tab-btn.active{ background:linear-gradient(135deg,var(--brass-bright),var(--brass) 55%,#c9791b); color:#1a1200; border-color:var(--brass); box-shadow:0 0 26px rgba(255,170,0,.275), 0 4px 12px rgba(0,0,0,.35); font-weight:700; }
 
   .panel{display:none;} .panel.active{display:block;animation:fade .35s ease;}
   @keyframes fade{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:none;}}
@@ -90,22 +175,22 @@
   .entry:hover{ transform:translateX(3px); box-shadow:0 0 0 1px rgba(255,255,255,.06), 0 14px 30px -12px rgba(0,0,0,.7); }
   .entry.gold{ border-left-color:var(--stamp-red); border-left-width:10px; padding:24px 28px; margin-bottom:22px; margin-top:4px;
     transform:scale(1.035); z-index:3; position:relative;
-    background:linear-gradient(135deg,#fff6dc,#3a2400 145%);
-    box-shadow:0 0 0 1px rgba(255,176,32,.4), 0 0 0 3px rgba(255,176,32,.18), 0 0 55px -6px rgba(255,176,32,.55), 0 20px 40px -16px rgba(0,0,0,.75);
+    background:linear-gradient(135deg,#fffaea 0%,#ffe4a3 22%,#7a4a0a 130%,#3a2400 150%);
+    box-shadow:0 0 0 1px rgba(255,170,0,.248), 0 0 0 3px rgba(255,170,0,.11), 0 0 55px -6px rgba(255,170,0,.303), 0 0 90px -20px rgba(138,92,240,.22), 0 20px 40px -16px rgba(0,0,0,.75);
     animation:gold-card-glow 2.4s ease-in-out infinite; }
   .entry.gold:hover{ transform:scale(1.035) translateX(3px); }
   @keyframes gold-card-glow{
-    0%,100%{ box-shadow:0 0 0 1px rgba(255,176,32,.4), 0 0 0 3px rgba(255,176,32,.18), 0 0 55px -6px rgba(255,176,32,.55), 0 20px 40px -16px rgba(0,0,0,.75); }
-    50%{ box-shadow:0 0 0 1px rgba(255,176,32,.55), 0 0 0 5px rgba(255,176,32,.3), 0 0 75px -4px rgba(255,176,32,.8), 0 20px 40px -16px rgba(0,0,0,.75); }
+    0%,100%{ box-shadow:0 0 0 1px rgba(255,170,0,.22), 0 0 0 3px rgba(255,170,0,.099), 0 0 55px -6px rgba(255,170,0,.303), 0 20px 40px -16px rgba(0,0,0,.75); }
+    50%{ box-shadow:0 0 0 1px rgba(255,170,0,.303), 0 0 0 5px rgba(255,170,0,.165), 0 0 75px -4px rgba(255,170,0,.44), 0 20px 40px -16px rgba(0,0,0,.75); }
   }
   .leader-tag{ font-family:'Orbitron','Oswald',sans-serif; font-size:11px; font-weight:800; letter-spacing:.12em; text-transform:uppercase;
     color:#8a5200; margin:0 0 4px; display:flex; align-items:center; gap:5px; }
   .mascot-avatar{ width:52px;height:52px;border-radius:50%;object-fit:cover; transition:transform .3s; filter:drop-shadow(0 0 8px rgba(0,0,0,.5)); }
-  .entry.gold .mascot-avatar{ transform:scale(1.3); width:60px; height:60px; box-shadow:0 0 0 3px var(--brass), 0 0 20px rgba(255,176,32,.6) !important; }
+  .entry.gold .mascot-avatar{ transform:scale(1.3); width:60px; height:60px; box-shadow:0 0 0 3px var(--brass), 0 0 20px rgba(255,170,0,.33) !important; }
   .team-name-row{ display:flex; align-items:center; gap:10px; }
   .rank-num{ font-family:'Orbitron','IBM Plex Mono',monospace; font-size:26px;font-weight:800; color:var(--ink-soft); text-align:center;
     width:44px;height:44px;line-height:44px;border-radius:50%; background:rgba(255,255,255,.04); margin:0 auto; }
-  #rankingList .entry:nth-child(1) .rank-num{ background:radial-gradient(circle,#ffe9b0,var(--brass) 70%); color:#3a2400; box-shadow:0 0 18px rgba(255,176,32,.6);
+  #rankingList .entry:nth-child(1) .rank-num{ background:radial-gradient(circle,#ffe9b0,var(--brass) 70%); color:#3a2400; box-shadow:0 0 18px rgba(255,170,0,.33);
     width:52px; height:52px; line-height:52px; font-size:30px; }
   #rankingList .entry:nth-child(2) .rank-num{ background:radial-gradient(circle,#f2f6fb,var(--silver) 70%); color:#2a3444; box-shadow:0 0 14px rgba(201,214,232,.5); }
   #rankingList .entry:nth-child(3) .rank-num{ background:radial-gradient(circle,#f4c79a,var(--bronze) 70%); color:#3a2000; box-shadow:0 0 14px rgba(224,153,94,.5); }
@@ -120,25 +205,25 @@
   .chip b{color:var(--ink);}
   .total-box{text-align:right;}
   .entry.gold .total-box{ padding-top:20px; }
-  .total-num{ font-family:'Orbitron','IBM Plex Mono',monospace; font-size:28px;font-weight:800;color:var(--brass-bright); line-height:1; text-shadow:0 0 16px rgba(255,176,32,.4); }
-  .entry.gold .total-num{ font-size:34px; color:#8a3d00; text-shadow:0 0 18px rgba(255,176,32,.5); }
+  .total-num{ font-family:'Orbitron','IBM Plex Mono',monospace; font-size:28px;font-weight:800;color:var(--brass-bright); line-height:1; text-shadow:0 0 16px rgba(255,170,0,.22); }
+  .entry.gold .total-num{ font-size:34px; color:#8a3d00; text-shadow:0 0 18px rgba(255,170,0,.275); }
   .total-label{font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-soft);}
   .entry.gold .total-label{ color:#8a5200; }
   .stamp{ position:absolute;top:-16px;right:-12px; font-family:'Orbitron','Oswald',sans-serif; font-size:10px;letter-spacing:.08em; color:#3a2400;
     background:radial-gradient(circle,#ffe9b0,var(--brass) 75%); border:2px solid #ffe9b0; border-radius:50%; width:56px;height:56px;
     display:flex;align-items:center;justify-content:center; text-align:center; transform:rotate(-12deg); text-transform:uppercase; line-height:1.05;
-    box-shadow:0 0 0 4px var(--navy-deep), 0 0 22px rgba(255,176,32,.7); animation:pulse-glow 2.2s ease-in-out infinite; font-weight:700; }
-  @keyframes pulse-glow{ 0%,100%{box-shadow:0 0 0 4px var(--navy-deep), 0 0 16px rgba(255,176,32,.55);} 50%{box-shadow:0 0 0 4px var(--navy-deep), 0 0 30px rgba(255,176,32,.9);} }
+    box-shadow:0 0 0 4px var(--navy-deep), 0 0 22px rgba(255,170,0,.385); animation:pulse-glow 2.2s ease-in-out infinite; font-weight:700; }
+  @keyframes pulse-glow{ 0%,100%{box-shadow:0 0 0 4px var(--navy-deep), 0 0 16px rgba(255,170,0,.303);} 50%{box-shadow:0 0 0 4px var(--navy-deep), 0 0 30px rgba(255,170,0,.495);} }
 
 
-  .log-title{ font-family:'Orbitron','Oswald',sans-serif;text-transform:uppercase;font-size:14px; color:var(--cyan);letter-spacing:.1em;margin:30px 0 12px; text-shadow:0 0 12px rgba(0,229,255,.4); }
+  .log-title{ font-family:'Orbitron','Oswald',sans-serif;text-transform:uppercase;font-size:14px; color:var(--cyan);letter-spacing:.1em;margin:30px 0 12px; text-shadow:0 0 12px rgba(30,238,255,.22); }
   .log-row{ font-family:'IBM Plex Mono',monospace;font-size:12px; color:var(--ink-soft);padding:8px 4px;border-bottom:1px dotted var(--line); display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap; }
 
   /* PAINEL ADMIN — COMMAND CENTER */
   .admin-toggle{ font-family:'Orbitron','IBM Plex Mono',monospace; font-size:12px; color:#1a1200; background:linear-gradient(135deg,var(--brass),#c9791b); border:none; padding:10px 22px; border-radius:999px; cursor:pointer; margin-top:34px; display:none; text-transform:uppercase; font-weight:700;
-    box-shadow:0 0 24px rgba(255,176,32,.45); }
-  .admin-panel{ margin-top:16px; background:linear-gradient(160deg,#101d3c,#0a1428); border:1px solid rgba(255,176,32,.35); border-radius:16px; padding:24px; display:none;
-    box-shadow:0 0 0 1px rgba(255,176,32,.06), 0 30px 60px -30px rgba(0,0,0,.8); }
+    box-shadow:0 0 24px rgba(255,170,0,.248); }
+  .admin-panel{ margin-top:16px; background:linear-gradient(160deg,#182552 0%,#0d1836 55%,#070d20 100%); border:1px solid rgba(255,170,0,.193); border-radius:16px; padding:24px; display:none;
+    box-shadow:0 0 0 1px rgba(255,170,0,.044), 0 0 60px -26px rgba(138,92,240,.22), 0 30px 60px -30px rgba(0,0,0,.85); }
   .admin-panel.open{display:block;}
   .admin-panel h3{font-family:'Orbitron','Oswald',sans-serif;font-size:16px;text-transform:uppercase;margin:0 0 16px;color:var(--brass-bright); border-bottom:1px solid var(--line); padding-bottom:10px; letter-spacing:.04em;}
   .admin-panel h3::before{ content:"▸ "; color:var(--cyan); }
@@ -177,9 +262,9 @@
   .divider{height:1px;background:linear-gradient(90deg,transparent,var(--line),transparent);margin:26px 0;}
 
   /* TOAST E LOADING */
-  .toast{ position:fixed;top:24px;left:50%;transform:translateX(-50%) translateY(-16px); background:linear-gradient(135deg,#132244,#0a1428);color:var(--ink);padding:12px 22px;border-radius:999px;
+  .toast{ position:fixed;top:24px;left:50%;transform:translateX(-50%) translateY(-16px); background:linear-gradient(135deg,#1a2856,#0a1428);color:var(--ink);padding:12px 22px;border-radius:999px;
     font-family:'Orbitron','Oswald',sans-serif;text-transform:uppercase;font-size:12px; letter-spacing:.04em; border:1px solid var(--brass);opacity:0;pointer-events:none;
-    transition:opacity .25s, transform .25s; z-index:50; box-shadow:0 0 30px rgba(255,176,32,.35), 0 10px 24px rgba(0,0,0,.5); }
+    transition:opacity .25s, transform .25s; z-index:50; box-shadow:0 0 34px rgba(255,170,0,.22), 0 0 24px -6px rgba(138,92,240,.193), 0 10px 24px rgba(0,0,0,.5); }
   .toast::before{ content:"🏆 "; }
   .toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
   .loading{color:var(--ink-soft);font-family:'IBM Plex Mono',monospace;font-size:13px;padding:24px 0; text-align:center;}
@@ -187,15 +272,20 @@
   @keyframes blink{50%{opacity:0;}}
 
   /* RANKING INDIVIDUAL */
-  .individual-row{ display:grid; grid-template-columns:44px 1fr auto; gap:14px; align-items:center;
+  .individual-row{ display:grid; grid-template-columns:44px 44px 1fr auto; gap:14px; align-items:center;
     background:linear-gradient(135deg,var(--paper),#0b1530); color:var(--ink); border-radius:12px; padding:12px 18px; margin-bottom:10px;
     border-left:4px solid var(--line); box-shadow:0 0 0 1px rgba(255,255,255,.04), 0 8px 18px -12px rgba(0,0,0,.6); }
-  .individual-row.me{ border-left-color:var(--cyan); box-shadow:0 0 0 1px rgba(0,229,255,.3), 0 0 20px -4px rgba(0,229,255,.4); background:linear-gradient(135deg,#0d2338,#0b1530); }
+  .individual-row.me{ border-left-color:var(--cyan); box-shadow:0 0 0 1px rgba(30,238,255,.165), 0 0 20px -4px rgba(30,238,255,.22); background:linear-gradient(135deg,#0d2338,#0b1530); }
   .individual-rank{ font-family:'Orbitron','IBM Plex Mono',monospace; font-size:16px; font-weight:800; color:var(--ink-soft); text-align:center;
     width:36px;height:36px;line-height:36px;border-radius:50%; background:rgba(255,255,255,.04); }
   .individual-row:nth-child(1) .individual-rank{ background:radial-gradient(circle,#ffe9b0,var(--brass) 70%); color:#3a2400; }
   .individual-row:nth-child(2) .individual-rank{ background:radial-gradient(circle,#f2f6fb,var(--silver) 70%); color:#2a3444; }
   .individual-row:nth-child(3) .individual-rank{ background:radial-gradient(circle,#f4c79a,var(--bronze) 70%); color:#3a2000; }
+  .individual-avatar{ width:40px; height:40px; border-radius:50%; object-fit:cover; border:2px solid var(--line); box-shadow:0 0 0 1px rgba(255,255,255,.05); }
+  .individual-row.me .individual-avatar{ border-color:var(--cyan); }
+  .individual-avatar-fallback{ width:40px; height:40px; border-radius:50%; display:flex; align-items:center; justify-content:center;
+    font-family:'Orbitron','IBM Plex Mono',monospace; font-size:14px; font-weight:800; color:var(--navy-deep);
+    background:linear-gradient(135deg,var(--brass-bright),var(--brass)); border:2px solid var(--line); }
   .individual-name{ font-family:'Oswald',sans-serif; font-weight:600; font-size:15px; margin:0; color:var(--ink); }
   .individual-team{ font-family:'IBM Plex Mono',monospace; font-size:11px; margin:2px 0 0; color:var(--ink-soft); text-transform:uppercase; letter-spacing:.04em; }
   .individual-pts{ font-family:'Orbitron','IBM Plex Mono',monospace; font-size:20px; font-weight:800; color:var(--brass-bright); text-align:right; line-height:1; }
@@ -203,22 +293,49 @@
 
   /* PREMIAÇÃO — CHEQUES */
   .cheques-grid{ display:grid; grid-template-columns:repeat(auto-fill,minmax(320px,1fr)); gap:22px; }
+
+  /* CALENDÁRIO */
+  .eventos-list{ display:flex; flex-direction:column; gap:12px; }
+  .evento-card{ display:grid; grid-template-columns:64px 1fr; gap:16px; align-items:center;
+    background:linear-gradient(135deg,var(--paper),#0b1530); color:var(--ink); border-radius:12px; padding:14px 18px;
+    border-left:4px solid var(--brass); box-shadow:0 0 0 1px rgba(255,255,255,.04), 0 8px 18px -12px rgba(0,0,0,.6); }
+  .evento-data{ text-align:center; font-family:'Orbitron','IBM Plex Mono',monospace; color:#1a1200;
+    background:linear-gradient(135deg,var(--brass-bright),var(--brass)); border-radius:10px; padding:8px 4px; }
+  .evento-data .dia{ display:block; font-size:20px; font-weight:800; line-height:1; }
+  .evento-data .mes{ display:block; font-size:10px; text-transform:uppercase; letter-spacing:.06em; margin-top:2px; }
+  .evento-info h4{ margin:0 0 4px; font-family:'Oswald',sans-serif; font-weight:600; font-size:15px; color:var(--ink); }
+  .evento-hora{ font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--cyan); margin:0; }
+  .evento-desc{ font-family:'IBM Plex Sans',sans-serif; font-size:13px; color:var(--ink-soft); margin:6px 0 0; line-height:1.5; }
+
+  /* CONFIRMAÇÃO DE PARTICIPAÇÃO NO EVENTO */
+  .participa-bloco{ margin-top:12px; padding-top:12px; border-top:1px dashed var(--line); }
+  .participa-btn{ font-family:'IBM Plex Sans',sans-serif; font-size:13px; font-weight:700; color:#1a1200;
+    background:linear-gradient(135deg,var(--brass-bright),var(--brass)); border:1px solid var(--brass); border-radius:999px;
+    padding:9px 18px; cursor:pointer; transition:filter .2s, transform .2s; }
+  .participa-btn:hover{ filter:brightness(1.08); }
+  .participa-btn:active{ transform:scale(.97); }
+  .participa-btn.confirmado{ background:transparent; color:var(--ok-green); border-color:var(--ok-green); font-weight:600; }
+
+  /* REGULAMENTO */
+  .regulamento-box{ background:linear-gradient(135deg,var(--paper),#0b1530); border-radius:12px; padding:22px 24px;
+    border:1px solid var(--line); color:var(--ink); font-family:'IBM Plex Sans',sans-serif; font-size:14px; line-height:1.75;
+    white-space:pre-wrap; }
   @keyframes cheque-in{
     0%{ opacity:0; transform:translateY(22px) scale(.96); }
     100%{ opacity:1; transform:translateY(0) scale(1); }
   }
   @keyframes cheque-glow-pulse{
-    0%,100%{ box-shadow:0 0 0 1px rgba(255,56,100,.3), 0 0 40px -8px rgba(255,176,32,.55), 0 18px 36px -16px rgba(0,0,0,.65); }
-    50%{ box-shadow:0 0 0 1px rgba(255,56,100,.5), 0 0 60px -4px rgba(255,176,32,.85), 0 18px 36px -16px rgba(0,0,0,.65); }
+    0%,100%{ box-shadow:0 0 0 1px rgba(255,45,95,.165), 0 0 40px -8px rgba(255,170,0,.303), 0 18px 36px -16px rgba(0,0,0,.65); }
+    50%{ box-shadow:0 0 0 1px rgba(255,45,95,.275), 0 0 60px -4px rgba(255,170,0,.468), 0 18px 36px -16px rgba(0,0,0,.65); }
   }
   @keyframes cheque-sheen{
     0%{ background-position:-150% 0; }
     100%{ background-position:250% 0; }
   }
   .cheque{
-    position:relative; background:linear-gradient(160deg,#fff8e6,#f3e6c4);
+    position:relative; background:linear-gradient(160deg,#fffdf3 0%,#fff2cf 35%,#f3e0ac 100%);
     border:2px solid var(--brass); border-radius:14px; padding:20px 22px 18px; color:#241800;
-    box-shadow:0 0 0 1px rgba(255,176,32,.25), 0 18px 36px -16px rgba(0,0,0,.65);
+    box-shadow:0 0 0 1px rgba(255,170,0,.154), 0 0 40px -18px rgba(138,92,240,.193), 0 18px 36px -16px rgba(0,0,0,.65);
     font-family:'IBM Plex Mono',monospace; overflow:hidden;
     opacity:0; animation:cheque-in .55s cubic-bezier(.2,.8,.3,1) forwards;
     transition:transform .25s ease, box-shadow .25s ease;
@@ -227,7 +344,7 @@
   .cheque:nth-child(2){ animation-delay:.2s; }
   .cheque:nth-child(3){ animation-delay:.35s; }
   .cheque:nth-child(4){ animation-delay:.5s; }
-  .cheque:hover{ transform:translateY(-6px); box-shadow:0 0 0 1px rgba(255,176,32,.35), 0 26px 44px -18px rgba(0,0,0,.75); }
+  .cheque:hover{ transform:translateY(-6px); box-shadow:0 0 0 1px rgba(255,170,0,.193), 0 26px 44px -18px rgba(0,0,0,.75); }
   .cheque::before{ content:""; position:absolute; top:0;left:0;right:0;height:5px; background:linear-gradient(90deg,var(--brass),var(--cyan),var(--brass)); }
   .cheque::after{
     content:""; position:absolute; top:0; left:0; right:0; bottom:0; pointer-events:none;
@@ -246,9 +363,103 @@
   .cheque-total-label{ font-family:'Orbitron','Oswald',sans-serif; font-size:11px; text-transform:uppercase; letter-spacing:.06em; color:#6b5330; }
   .cheque-total-value{ font-family:'Orbitron','IBM Plex Mono',monospace; font-size:24px; font-weight:800; color:#8a3d00; }
   .cheque-footnote{ margin-top:8px; font-size:10px; text-align:right; color:#8a7550; font-style:italic; letter-spacing:.02em; }
+
+  /* RESPONSIVIDADE GERAL — CELULAR */
+  @media (max-width:600px){
+    body{ padding:18px 10px 40px; }
+    .manifest-head{ padding:18px 16px 16px; }
+    .logos-container{ padding:10px 14px; gap:10px; }
+    .logos-container img{ height:24px; }
+    .logos-container img.logo-20{ height:30px; }
+    .logos-container img.logo-tc{ height:28px; }
+    .tabs{ gap:8px; margin:20px 0 16px; }
+    .tab-btn{ padding:9px 16px; font-size:11px; flex:1 1 auto; text-align:center; }
+    .login-view{ padding:24px 18px; margin-top:24px; max-width:100%; }
+    .admin-panel{ padding:16px; }
+    .admin-row{ flex-direction:column; align-items:stretch; }
+    .admin-row input, .admin-row select, .admin-row button{ width:100%; }
+    .user-search-wrap{ min-width:0; }
+    .cheques-grid{ grid-template-columns:1fr; gap:16px; }
+    .individual-row{ grid-template-columns:36px 36px 1fr auto; gap:10px; padding:10px 12px; }
+    .individual-avatar, .individual-avatar-fallback{ width:34px; height:34px; }
+    .individual-rank{ width:30px; height:30px; line-height:30px; font-size:13px; }
+    .individual-pts{ font-size:16px; }
+    .evento-card{ grid-template-columns:52px 1fr; padding:12px 14px; gap:12px; }
+    .evento-data .dia{ font-size:16px; }
+    .admin-table{ font-size:11.5px; }
+    .admin-table th, .admin-table td{ padding:8px 8px; }
+    .regulamento-box{ padding:18px 16px; font-size:13.5px; }
+  }
 </style>
 </head>
 <body>
+  <!-- CENA ANIMADA: NAVIO NO MAR + CAMINHÃO NA ESTRADA (agora ao fundo transparente de todo o site) -->
+  <div class="bg-scene" aria-hidden="true">
+    <div class="scene-sky">
+      <span class="scene-sun"></span>
+      <span class="scene-cloud c1"></span>
+      <span class="scene-cloud c2"></span>
+      <span class="scene-cloud c3"></span>
+    </div>
+    <div class="scene-sea">
+      <svg class="scene-ship s1" viewBox="0 0 220 110">
+        <path d="M8,82 L212,82 L192,102 L28,102 Z" fill="#0a1428"/>
+        <rect x="18" y="66" width="184" height="18" rx="3" fill="#12203f"/>
+        <rect x="28" y="44" width="34" height="20" fill="var(--brass)"/>
+        <rect x="64" y="44" width="34" height="20" fill="var(--cyan)"/>
+        <rect x="100" y="44" width="34" height="20" fill="var(--stamp-red)"/>
+        <rect x="136" y="44" width="34" height="20" fill="var(--silver)"/>
+        <rect x="44" y="24" width="34" height="20" fill="var(--cyan)"/>
+        <rect x="80" y="24" width="34" height="20" fill="var(--brass)"/>
+        <rect x="116" y="24" width="34" height="20" fill="var(--silver)"/>
+        <rect x="172" y="28" width="20" height="38" rx="2" fill="#0a1c3a"/>
+        <rect x="176" y="33" width="12" height="8" fill="#8fd6ff" opacity=".6"/>
+        <rect x="180" y="10" width="4" height="20" fill="#0a1c3a"/>
+        <circle class="ship-smoke sm1" cx="182" cy="8" r="5" fill="#c9d6e8" opacity=".5"/>
+        <circle class="ship-smoke sm2" cx="182" cy="8" r="5" fill="#c9d6e8" opacity=".5"/>
+      </svg>
+      <svg class="scene-ship s2" viewBox="0 0 220 110">
+        <path d="M8,82 L212,82 L192,102 L28,102 Z" fill="#0a1428"/>
+        <rect x="18" y="66" width="184" height="18" rx="3" fill="#12203f"/>
+        <rect x="28" y="44" width="34" height="20" fill="var(--stamp-red)"/>
+        <rect x="64" y="44" width="34" height="20" fill="var(--brass)"/>
+        <rect x="100" y="44" width="34" height="20" fill="var(--silver)"/>
+        <rect x="136" y="44" width="34" height="20" fill="var(--cyan)"/>
+        <rect x="44" y="24" width="34" height="20" fill="var(--brass)"/>
+        <rect x="80" y="24" width="34" height="20" fill="var(--cyan)"/>
+        <rect x="172" y="28" width="20" height="38" rx="2" fill="#0a1c3a"/>
+        <rect x="176" y="33" width="12" height="8" fill="#8fd6ff" opacity=".6"/>
+        <rect x="180" y="10" width="4" height="20" fill="#0a1c3a"/>
+        <circle class="ship-smoke sm1" cx="182" cy="8" r="5" fill="#c9d6e8" opacity=".5"/>
+        <circle class="ship-smoke sm2" cx="182" cy="8" r="5" fill="#c9d6e8" opacity=".5"/>
+      </svg>
+    </div>
+    <div class="scene-road">
+      <svg class="scene-truck t1" viewBox="0 0 170 80">
+        <rect x="4" y="28" width="92" height="36" rx="3" fill="var(--brass)"/>
+        <rect x="10" y="36" width="80" height="6" fill="#8a5200" opacity=".5"/>
+        <rect x="10" y="48" width="80" height="6" fill="#8a5200" opacity=".5"/>
+        <text x="50" y="24" font-family="'Orbitron',sans-serif" font-size="11" font-weight="800" fill="#1a1200" text-anchor="middle">TC</text>
+        <path d="M96,64 L96,34 L120,34 L138,50 L138,64 Z" fill="#12203f"/>
+        <rect x="102" y="40" width="16" height="12" fill="#8fd6ff" opacity=".7"/>
+        <g class="wheel w1"><circle cx="30" cy="66" r="10" fill="#1a1a1a" stroke="#ffb020" stroke-width="1.6"/><circle cx="30" cy="66" r="4" fill="#e8eef7"/><circle cx="30" cy="59" r="1.6" fill="#ffb020"/></g>
+        <g class="wheel w2"><circle cx="70" cy="66" r="10" fill="#1a1a1a" stroke="#ffb020" stroke-width="1.6"/><circle cx="70" cy="66" r="4" fill="#e8eef7"/><circle cx="70" cy="59" r="1.6" fill="#ffb020"/></g>
+        <g class="wheel w3"><circle cx="122" cy="66" r="10" fill="#1a1a1a" stroke="#ffb020" stroke-width="1.6"/><circle cx="122" cy="66" r="4" fill="#e8eef7"/><circle cx="122" cy="59" r="1.6" fill="#ffb020"/></g>
+      </svg>
+      <svg class="scene-truck t2" viewBox="0 0 170 80">
+        <rect x="4" y="28" width="92" height="36" rx="3" fill="var(--cyan)"/>
+        <rect x="10" y="36" width="80" height="6" fill="#0a6f88" opacity=".5"/>
+        <rect x="10" y="48" width="80" height="6" fill="#0a6f88" opacity=".5"/>
+        <text x="50" y="24" font-family="'Orbitron',sans-serif" font-size="11" font-weight="800" fill="#04222c" text-anchor="middle">TC</text>
+        <path d="M96,64 L96,34 L120,34 L138,50 L138,64 Z" fill="#12203f"/>
+        <rect x="102" y="40" width="16" height="12" fill="#8fd6ff" opacity=".7"/>
+        <g class="wheel w1"><circle cx="30" cy="66" r="10" fill="#1a1a1a" stroke="#ffb020" stroke-width="1.6"/><circle cx="30" cy="66" r="4" fill="#e8eef7"/><circle cx="30" cy="59" r="1.6" fill="#ffb020"/></g>
+        <g class="wheel w2"><circle cx="70" cy="66" r="10" fill="#1a1a1a" stroke="#ffb020" stroke-width="1.6"/><circle cx="70" cy="66" r="4" fill="#e8eef7"/><circle cx="70" cy="59" r="1.6" fill="#ffb020"/></g>
+        <g class="wheel w3"><circle cx="122" cy="66" r="10" fill="#1a1a1a" stroke="#ffb020" stroke-width="1.6"/><circle cx="122" cy="66" r="4" fill="#e8eef7"/><circle cx="122" cy="59" r="1.6" fill="#ffb020"/></g>
+      </svg>
+      <div class="road-dashes"></div>
+    </div>
+  </div>
 <div class="wrap">
 
   <div class="manifest-head">
@@ -266,7 +477,11 @@
     </div>
     <div id="userHeaderInfo" class="user-header-info" style="display:none;">
       <span id="userGreeting"></span>
-      <button class="logout-btn" onclick="logout()">Sair da Conta</button>
+      <div style="display:flex; gap:10px; align-items:center;">
+        <button class="logout-btn" onclick="document.getElementById('profileFotoInput').click()">Alterar Foto</button>
+        <input type="file" id="profileFotoInput" accept="image/*" style="display:none;" onchange="handleProfileFotoChange(event)">
+        <button class="logout-btn" onclick="logout()">Sair da Conta</button>
+      </div>
     </div>
   </div>
 
@@ -282,6 +497,16 @@
         <option value="incoterms">Os Incoterms</option>
         <option value="manifestos">Os Manifestos</option>
       </select>
+      <div style="display:flex; align-items:center; gap:12px;">
+        <div id="loginFotoPreviewWrap" style="width:52px; height:52px; border-radius:50%; overflow:hidden; flex-shrink:0; border:2px solid var(--line); display:flex; align-items:center; justify-content:center; background:rgba(255,255,255,.04); font-family:'IBM Plex Mono',monospace; font-size:10px; color:var(--ink-soft); text-align:center;">
+          <img id="loginFotoPreview" style="display:none; width:100%; height:100%; object-fit:cover;">
+          <span id="loginFotoPlaceholder">sem foto</span>
+        </div>
+        <label style="flex:1; display:flex; flex-direction:column; gap:4px;">
+          <span style="font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--ink-soft);">Foto de perfil (opcional)</span>
+          <input type="file" id="loginFoto" accept="image/*" onchange="handleLoginFotoChange(event)" style="font-family:'IBM Plex Mono',monospace; font-size:11px;">
+        </label>
+      </div>
     </div>
 
     <input type="email" id="loginEmail" placeholder="E-mail">
@@ -298,6 +523,8 @@
       <button class="tab-btn active" data-tab="ranking">Ranking</button>
       <button class="tab-btn" data-tab="rankingIndividual">Ranking Individual</button>
       <button class="tab-btn" data-tab="premiacao">Premiação</button>
+      <button class="tab-btn" data-tab="calendario">Calendário</button>
+      <button class="tab-btn" data-tab="regulamento">Regulamento</button>
     </div>
 
     <div id="ranking" class="panel active">
@@ -316,6 +543,17 @@
         Premiação em dinheiro por integrante da equipe, de acordo com a posição da equipe no ranking geral. Só recebe a premiação quem atingir, individualmente, no mínimo <b id="minPontosLabel" style="color:var(--brass-bright);">15</b> pontos — integrantes abaixo disso não entram no cálculo do valor total pago à equipe. Esse valor será utilizado no Happy Hour da equipe.
       </p>
       <div id="chequesGrid" class="cheques-grid"></div>
+    </div>
+
+    <div id="calendario" class="panel">
+      <p style="font-family:'IBM Plex Mono',monospace; font-size:12px; color:var(--ink-soft); margin:0 0 16px;">
+        Datas e horários dos próximos eventos da dinâmica.
+      </p>
+      <div id="calendarioList" class="loading">Sincronizando com o banco de dados...</div>
+    </div>
+
+    <div id="regulamento" class="panel">
+      <div id="regulamentoContent" class="regulamento-box loading">Sincronizando com o banco de dados...</div>
     </div>
 
     <!-- PAINEL ADMINISTRADOR EM FORMATO DE TABELA CORPORATIVA -->
@@ -389,6 +627,40 @@
         O valor de pontos é preenchido automaticamente conforme a atividade escolhida (ex.: Quiz = 1 ponto por acerto — se o participante acertou 3, ajuste manualmente para 3). Pode editar o número antes de lançar.
       </p>
 
+      <div class="divider"></div>
+
+      <h3>3. Calendário de Eventos</h3>
+      <p style="font-size:12px;color:#a9bcd8;font-family:'IBM Plex Mono',monospace;margin:0 0 12px;">
+        Cadastre as datas, horários e descrições dos eventos da dinâmica. Todos os participantes visualizam na aba Calendário.
+      </p>
+      <div class="admin-row">
+        <input id="adm-evento-data" type="date" style="width:160px">
+        <input id="adm-evento-hora" type="time" style="width:120px">
+        <input id="adm-evento-titulo" type="text" placeholder="Título do evento" style="flex:2; min-width:200px">
+        <button class="save-btn" id="adm-add-evento">Adicionar Evento</button>
+      </div>
+      <textarea id="adm-evento-desc" placeholder="Descrição (opcional)" rows="2" style="width:100%; font-family:'IBM Plex Mono',monospace; background:var(--navy-deep); color:var(--ink); border:1px solid var(--line); border-radius:8px; padding:10px 12px; font-size:13px; margin-bottom:6px; resize:vertical; box-sizing:border-box;"></textarea>
+      <p style="font-size:11px;color:var(--ink-soft);font-family:'IBM Plex Mono',monospace;margin:0 0 14px;">
+        No dia do evento, cada participante vê um botão para confirmar que vai participar (ou que participou) — sem precisar de formulário separado.
+      </p>
+      <div style="overflow-x:auto; margin-bottom:16px;">
+        <table class="admin-table">
+          <thead><tr><th>Data</th><th>Hora</th><th>Título</th><th>Confirmados</th><th>Ação</th></tr></thead>
+          <tbody id="adminEventosTable">
+            <tr><td colspan="5" style="text-align:center;">Nenhum evento cadastrado ainda.</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="divider"></div>
+
+      <h3>4. Regulamento</h3>
+      <p style="font-size:12px;color:#a9bcd8;font-family:'IBM Plex Mono',monospace;margin:0 0 12px;">
+        Texto exibido para todos os participantes na aba Regulamento.
+      </p>
+      <textarea id="adm-regulamento" rows="10" style="width:100%; font-family:'IBM Plex Sans',sans-serif; background:var(--navy-deep); color:var(--ink); border:1px solid var(--line); border-radius:8px; padding:12px 14px; font-size:13px; margin-bottom:12px; resize:vertical; line-height:1.6; box-sizing:border-box;"></textarea>
+      <button class="save-btn" id="adm-save-regulamento">Salvar Regulamento</button>
+
     </div>
   </div>
 
@@ -431,6 +703,9 @@ const DEFAULT_STATE = {
     // participantes forem batendo o mínimo de pontos.
     valores: { 1: 4200, 2: 3500, 3: 2450, 4: 1750 }
   },
+  eventos: [], // calendário de eventos (data, hora, título, descrição) — editável pelos administradores
+  participacoesEvento: {}, // chave `${eventoId}__${userId}` -> true quando o participante confirma presença/participação
+  regulamento: "Em breve: o regulamento completo da dinâmica será publicado aqui.", // texto editável pelos administradores
   log: []
 };
 
@@ -453,14 +728,28 @@ db.ref('gincanaState').on('value', (snapshot) => {
       if(!state.premiacaoConfig.valores) state.premiacaoConfig.valores = { ...DEFAULT_STATE.premiacaoConfig.valores };
       else state.premiacaoConfig.valores = { ...DEFAULT_STATE.premiacaoConfig.valores, ...state.premiacaoConfig.valores };
     }
-    // Migração: garante cor e mascote em times salvos antes desses campos existirem
+    // Migração: garante cor em times salvos antes desses campos existirem.
+    // O mascote SEMPRE usa a versão mais recente definida em DEFAULT_STATE
+    // (substitui qualquer mascote antigo já salvo no banco).
     if(!state.teams) state.teams = DEFAULT_STATE.teams;
     else {
+      let mascoteAtualizado = false;
       state.teams = state.teams.map(t => {
         const def = DEFAULT_STATE.teams.find(d => d.id === t.id);
-        return def ? { ...def, ...t, color: t.color || def.color, mascote: t.mascote || def.mascote } : t;
+        if(!def) return t;
+        if(t.mascote !== def.mascote) mascoteAtualizado = true;
+        return { ...def, ...t, color: t.color || def.color, mascote: def.mascote };
       });
+      if(mascoteAtualizado) saveState();
     }
+    if(!state.eventos) state.eventos = [];
+    let precisaSalvarEventos = false;
+    state.eventos.forEach(ev => {
+      if(!ev.id){ ev.id = 'ev_' + Date.now().toString(36) + Math.random().toString(36).slice(2,7); precisaSalvarEventos = true; }
+    });
+    if(precisaSalvarEventos) saveState();
+    if(!state.participacoesEvento) state.participacoesEvento = {};
+    if(typeof state.regulamento !== 'string') state.regulamento = DEFAULT_STATE.regulamento;
   } else {
     state = JSON.parse(JSON.stringify(DEFAULT_STATE));
     saveState();
@@ -485,6 +774,73 @@ function toggleAuthMode() {
   document.getElementById('authTitle').textContent = isSignUpMode ? 'Cadastro de Integrante' : 'Acessar Sistema';
   document.getElementById('authBtn').textContent = isSignUpMode ? 'Criar Conta' : 'Entrar';
   document.getElementById('toggleAuthBtn').textContent = isSignUpMode ? 'Já tem conta? Faça Login' : 'Não possui acesso? Cadastre-se aqui';
+  loginFotoDataUrl = null;
+  const fotoInput = document.getElementById('loginFoto');
+  if(fotoInput) fotoInput.value = '';
+  const fotoPreview = document.getElementById('loginFotoPreview');
+  if(fotoPreview){ fotoPreview.style.display = 'none'; fotoPreview.src = ''; }
+  const fotoPlaceholder = document.getElementById('loginFotoPlaceholder');
+  if(fotoPlaceholder) fotoPlaceholder.style.display = 'block';
+}
+
+let loginFotoDataUrl = null;
+
+function resizeImageToDataUrl(file, maxSize, quality){
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onerror = () => reject(new Error("Não foi possível ler a imagem."));
+    reader.onload = () => {
+      const img = new Image();
+      img.onerror = () => reject(new Error("Arquivo de imagem inválido."));
+      img.onload = () => {
+        let { width, height } = img;
+        if(width > height){
+          if(width > maxSize){ height = Math.round(height * (maxSize / width)); width = maxSize; }
+        } else {
+          if(height > maxSize){ width = Math.round(width * (maxSize / height)); height = maxSize; }
+        }
+        const canvas = document.createElement('canvas');
+        canvas.width = width; canvas.height = height;
+        const ctx = canvas.getContext('2d');
+        ctx.drawImage(img, 0, 0, width, height);
+        resolve(canvas.toDataURL('image/jpeg', quality));
+      };
+      img.src = reader.result;
+    };
+    reader.readAsDataURL(file);
+  });
+}
+
+async function handleLoginFotoChange(event){
+  const file = event.target.files && event.target.files[0];
+  if(!file) return;
+  try {
+    loginFotoDataUrl = await resizeImageToDataUrl(file, 160, 0.75);
+    const preview = document.getElementById('loginFotoPreview');
+    preview.src = loginFotoDataUrl;
+    preview.style.display = 'block';
+    document.getElementById('loginFotoPlaceholder').style.display = 'none';
+  } catch(err){
+    showToast("Não foi possível processar a foto. Tente outra imagem.");
+    loginFotoDataUrl = null;
+  }
+}
+
+async function handleProfileFotoChange(event){
+  const file = event.target.files && event.target.files[0];
+  if(!file || !currentUser) return;
+  try {
+    const dataUrl = await resizeImageToDataUrl(file, 160, 0.75);
+    state.users[currentUser.id].foto = dataUrl;
+    currentUser.foto = dataUrl;
+    await saveState();
+    render();
+    showToast("Foto de perfil atualizada!");
+  } catch(err){
+    showToast("Não foi possível processar a foto. Tente outra imagem.");
+  } finally {
+    event.target.value = '';
+  }
 }
 
 async function handleAuth() {
@@ -500,13 +856,14 @@ async function handleAuth() {
       const name = document.getElementById('loginName').value.trim();
       const teamId = document.getElementById('loginTeam').value;
       if(!name) throw new Error("Preencha seu nome completo.");
-      
+
       const userCredential = await auth.createUserWithEmailAndPassword(email, pass);
       state.users[userCredential.user.uid] = {
         id: userCredential.user.uid, name: name, email: email, teamId: teamId,
-        pontos: {}, saldo: 0
+        pontos: {}, saldo: 0, foto: loginFotoDataUrl || null
       };
       await saveState();
+      loginFotoDataUrl = null;
       showToast("Cadastro realizado com sucesso!");
     } else {
       await auth.signInWithEmailAndPassword(email, pass);
@@ -574,9 +931,9 @@ function updateAdminVisibility(){
 function render(){
   if(!currentUser) return;
   updateAdminVisibility();
-  renderRanking(); renderIndividualRanking(); renderPremiacao();
+  renderRanking(); renderIndividualRanking(); renderPremiacao(); renderCalendario(); renderRegulamento();
   if(isAdmin()){
-    renderAdminSelects(); renderAdminEmails(); renderAdminPremiacaoTable();
+    renderAdminSelects(); renderAdminEmails(); renderAdminPremiacaoTable(); renderAdminEventos(); renderAdminRegulamentoField();
   }
 }
 
@@ -631,9 +988,14 @@ function renderIndividualRanking(){
   }
   el.innerHTML = ranked.map((u,i) => {
     const isMe = currentUser && u.id === currentUser.id;
+    const initials = (u.name || '?').trim().split(/\s+/).slice(0,2).map(p => p[0]).join('').toUpperCase();
+    const avatarHtml = u.foto
+      ? `<img class="individual-avatar" src="${u.foto}" alt="">`
+      : `<div class="individual-avatar-fallback">${escapeHtml(initials)}</div>`;
     return `
     <div class="individual-row ${isMe ? 'me' : ''}">
       <div class="individual-rank">${String(i+1).padStart(2,'0')}</div>
+      ${avatarHtml}
       <div class="individual-info">
         <p class="individual-name">${escapeHtml(u.name)}${isMe ? ' <span style="color:var(--cyan);">(você)</span>' : ''}</p>
         <p class="individual-team">${escapeHtml(u.teamName)}</p>
@@ -719,6 +1081,116 @@ function renderAdminPremiacaoTable(){
   });
 }
 
+function formatDataBR(iso){
+  if(!iso) return '—';
+  const partes = iso.split('-');
+  if(partes.length !== 3) return iso;
+  const [y,m,d] = partes;
+  return `${d}/${m}/${y}`;
+}
+
+function renderCalendario(){
+  const eventos = [...(state.eventos || [])].sort((a,b) => (a.data+(a.hora||'')).localeCompare(b.data+(b.hora||'')));
+  const el = document.getElementById('calendarioList');
+  el.classList.remove('loading');
+  if(eventos.length === 0){
+    el.innerHTML = `<div class="log-row"><span>Nenhum evento cadastrado ainda.</span></div>`;
+    return;
+  }
+  const meses = ['JAN','FEV','MAR','ABR','MAI','JUN','JUL','AGO','SET','OUT','NOV','DEZ'];
+  const confirmacoes = state.participacoesEvento || {};
+  const hojeISO = new Date().toISOString().slice(0,10);
+  el.innerHTML = `<div class="eventos-list">` + eventos.map(ev => {
+    const partes = (ev.data || '').split('-');
+    const dia = partes[2] || '--';
+    const mesLabel = partes[1] ? (meses[parseInt(partes[1],10)-1] || '') : '';
+    const minhaChave = currentUser ? `${ev.id}__${currentUser.id}` : null;
+    const confirmado = minhaChave ? !!confirmacoes[minhaChave] : false;
+    const jaAconteceu = ev.data && ev.data < hojeISO;
+    const labelConfirmar = jaAconteceu ? 'Marcar que participei' : 'Vou participar';
+    const labelConfirmado = jaAconteceu ? '✔ Participação confirmada' : '✔ Presença confirmada';
+    const participaHtml = `
+        <div class="participa-bloco" data-evento-id="${escapeHtml(ev.id)}">
+          <button type="button" class="participa-btn${confirmado ? ' confirmado' : ''}">${confirmado ? labelConfirmado : labelConfirmar}</button>
+        </div>`;
+    return `
+    <div class="evento-card">
+      <div class="evento-data"><span class="dia">${escapeHtml(dia)}</span><span class="mes">${escapeHtml(mesLabel)}</span></div>
+      <div class="evento-info">
+        <h4>${escapeHtml(ev.titulo || 'Evento')}</h4>
+        ${ev.hora ? `<p class="evento-hora">🕒 ${escapeHtml(ev.hora)}</p>` : ''}
+        ${ev.descricao ? `<p class="evento-desc">${escapeHtml(ev.descricao)}</p>` : ''}
+        ${participaHtml}
+      </div>
+    </div>`;
+  }).join('') + `</div>`;
+
+  el.querySelectorAll('.participa-btn').forEach(btn => {
+    btn.addEventListener('click', async () => {
+      if(!currentUser) return showToast("Faça login para confirmar sua participação.");
+      const eventoId = btn.closest('.participa-bloco').dataset.eventoId;
+      if(!state.participacoesEvento) state.participacoesEvento = {};
+      const chave = `${eventoId}__${currentUser.id}`;
+      const novoValor = !state.participacoesEvento[chave];
+      if(novoValor) state.participacoesEvento[chave] = true;
+      else delete state.participacoesEvento[chave];
+      await saveState();
+      showToast(novoValor ? "Participação confirmada!" : "Confirmação removida.");
+    });
+  });
+}
+
+function renderRegulamento(){
+  const el = document.getElementById('regulamentoContent');
+  el.classList.remove('loading');
+  el.textContent = state.regulamento || DEFAULT_STATE.regulamento;
+}
+
+function renderAdminEventos(){
+  const tbody = document.getElementById('adminEventosTable');
+  const eventos = state.eventos || [];
+  if(eventos.length === 0){
+    tbody.innerHTML = `<tr><td colspan="5" style="text-align:center;">Nenhum evento cadastrado ainda.</td></tr>`;
+    return;
+  }
+  const ordenados = eventos.map((ev,i) => ({ ...ev, _idx:i })).sort((a,b) => (a.data+(a.hora||'')).localeCompare(b.data+(b.hora||'')));
+  tbody.innerHTML = ordenados.map(ev => {
+    const confirmacoes = state.participacoesEvento || {};
+    const totalConfirmados = Object.keys(confirmacoes).filter(k => k.startsWith(ev.id + '__')).length;
+    return `
+    <tr>
+      <td>${formatDataBR(ev.data)}</td>
+      <td>${escapeHtml(ev.hora || '—')}</td>
+      <td>${escapeHtml(ev.titulo || '')}</td>
+      <td style="text-align:center;"><span style="color:var(--brass-bright); font-weight:700;">${totalConfirmados}</span></td>
+      <td><button class="save-btn" data-idx="${ev._idx}" data-action="del-evento" style="background:linear-gradient(135deg,var(--stamp-red-bright),var(--stamp-red)); color:#3a0010;">Excluir</button></td>
+    </tr>`;
+  }).join('');
+
+  tbody.querySelectorAll('[data-action="del-evento"]').forEach(btn => {
+    btn.addEventListener('click', async () => {
+      const idx = parseInt(btn.dataset.idx, 10);
+      if(confirm("Excluir este evento do calendário? As confirmações de participação desse evento também serão perdidas.")){
+        const [ev] = state.eventos.splice(idx, 1);
+        if(ev && state.participacoesEvento){
+          Object.keys(state.participacoesEvento).forEach(k => {
+            if(k.startsWith(ev.id + '__')) delete state.participacoesEvento[k];
+          });
+        }
+        await saveState();
+        showToast("Evento removido.");
+      }
+    });
+  });
+}
+
+function renderAdminRegulamentoField(){
+  const ta = document.getElementById('adm-regulamento');
+  if(document.activeElement !== ta){
+    ta.value = state.regulamento || '';
+  }
+}
+
 function renderAdminSelects() {
   const usersArray = Object.values(state.users || {});
   const opts = usersArray.map(u => {
@@ -779,6 +1251,29 @@ document.getElementById('adm-add-admin').addEventListener('click', async ()=>{
   input.value = '';
   await saveState();
   showToast("Administrador adicionado.");
+});
+
+document.getElementById('adm-add-evento').addEventListener('click', async ()=>{
+  const data = document.getElementById('adm-evento-data').value;
+  const hora = document.getElementById('adm-evento-hora').value;
+  const titulo = document.getElementById('adm-evento-titulo').value.trim();
+  const descricao = document.getElementById('adm-evento-desc').value.trim();
+  if(!data || !titulo) return showToast("Informe pelo menos a data e o título do evento.");
+  if(!state.eventos) state.eventos = [];
+  const id = 'ev_' + Date.now().toString(36) + Math.random().toString(36).slice(2,7);
+  state.eventos.push({ id, data, hora, titulo, descricao });
+  document.getElementById('adm-evento-titulo').value = '';
+  document.getElementById('adm-evento-desc').value = '';
+  document.getElementById('adm-evento-hora').value = '';
+  document.getElementById('adm-evento-data').value = '';
+  await saveState();
+  showToast("Evento adicionado ao calendário.");
+});
+
+document.getElementById('adm-save-regulamento').addEventListener('click', async ()=>{
+  state.regulamento = document.getElementById('adm-regulamento').value;
+  await saveState();
+  showToast("Regulamento atualizado.");
 });
 
 async function removeAdminEmail(index){
