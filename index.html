@@ -706,6 +706,7 @@ const DEFAULT_STATE = {
   eventos: [], // calendário de eventos (data, hora, título, descrição) — editável pelos administradores
   participacoesEvento: {}, // chave `${eventoId}__${userId}` -> true quando o participante confirma presença/participação
   regulamento: "Em breve: o regulamento completo da dinâmica será publicado aqui.", // texto editável pelos administradores
+  adminUids: {}, // chave `${uid}` -> true. Espelha adminEmails por UID, usado pelas regras de segurança do banco de dados
   log: []
 };
 
@@ -750,6 +751,7 @@ db.ref('gincanaState').on('value', (snapshot) => {
     if(precisaSalvarEventos) saveState();
     if(!state.participacoesEvento) state.participacoesEvento = {};
     if(typeof state.regulamento !== 'string') state.regulamento = DEFAULT_STATE.regulamento;
+    if(!state.adminUids) state.adminUids = {};
   } else {
     state = JSON.parse(JSON.stringify(DEFAULT_STATE));
     saveState();
@@ -894,12 +896,24 @@ auth.onAuthStateChanged(user => {
   if (user && state && state.users[user.uid]) {
     currentUser = state.users[user.uid];
     showApp(); render();
+    syncAdminUid();
   } else {
     document.getElementById('loginView').style.display = 'flex';
     document.getElementById('appContainer').style.display = 'none';
     document.getElementById('userHeaderInfo').style.display = 'none';
   }
 });
+
+// Mantém state.adminUids (usado pelas regras de segurança do banco de dados) em sincronia
+// com state.adminEmails, guardando também o UID de cada administrador já logado.
+function syncAdminUid(){
+  if(!isAdmin()) return;
+  if(!state.adminUids) state.adminUids = {};
+  if(!state.adminUids[currentUser.id]){
+    state.adminUids[currentUser.id] = true;
+    saveState();
+  }
+}
 
 function showApp() {
   document.getElementById('loginView').style.display = 'none';
@@ -1156,13 +1170,26 @@ function renderAdminEventos(){
   const ordenados = eventos.map((ev,i) => ({ ...ev, _idx:i })).sort((a,b) => (a.data+(a.hora||'')).localeCompare(b.data+(b.hora||'')));
   tbody.innerHTML = ordenados.map(ev => {
     const confirmacoes = state.participacoesEvento || {};
-    const totalConfirmados = Object.keys(confirmacoes).filter(k => k.startsWith(ev.id + '__')).length;
+    const prefixo = ev.id + '__';
+    const uids = Object.keys(confirmacoes).filter(k => k.startsWith(prefixo)).map(k => k.slice(prefixo.length));
+    const participantes = uids.map(uid => {
+      const u = (state.users || {})[uid];
+      if(!u) return null;
+      const teamName = state.teams.find(t => t.id === u.teamId)?.name || 'Sem equipe';
+      return `${escapeHtml(u.name)} <span style="color:var(--ink-soft);">(${escapeHtml(teamName)})</span>`;
+    }).filter(Boolean);
+    const listaHtml = participantes.length === 0
+      ? '<span style="color:var(--ink-soft);">Ninguém confirmou ainda</span>'
+      : `<div style="max-height:110px; overflow-y:auto; line-height:1.6;">${participantes.map(p => `<div>${p}</div>`).join('')}</div>`;
     return `
     <tr>
       <td>${formatDataBR(ev.data)}</td>
       <td>${escapeHtml(ev.hora || '—')}</td>
       <td>${escapeHtml(ev.titulo || '')}</td>
-      <td style="text-align:center;"><span style="color:var(--brass-bright); font-weight:700;">${totalConfirmados}</span></td>
+      <td style="font-size:12px;">
+        <div style="color:var(--brass-bright); font-weight:700; margin-bottom:4px;">${participantes.length} confirmado${participantes.length === 1 ? '' : 's'}</div>
+        ${listaHtml}
+      </td>
       <td><button class="save-btn" data-idx="${ev._idx}" data-action="del-evento" style="background:linear-gradient(135deg,var(--stamp-red-bright),var(--stamp-red)); color:#3a0010;">Excluir</button></td>
     </tr>`;
   }).join('');
@@ -1230,8 +1257,10 @@ document.getElementById('adminToggle').addEventListener('click', async ()=>{
   const pin = prompt("Nenhum administrador cadastrado ainda.\nDigite o PIN mestre para se tornar o 1º administrador:");
   if(pin === ADMIN_PIN){
     if(!state.adminEmails) state.adminEmails = [];
+    if(!state.adminUids) state.adminUids = {};
     if(!state.adminEmails.map(e=>e.toLowerCase()).includes((currentUser.email||'').toLowerCase())){
       state.adminEmails.push(currentUser.email);
+      state.adminUids[currentUser.id] = true;
       await saveState();
     }
     panel.classList.add('open');
